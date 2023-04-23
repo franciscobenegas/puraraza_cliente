@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,7 +10,11 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { Box, Paper } from "@mui/material";
+import { Clasificacion } from "@/api";
+import { useAuth } from "@/hooks";
 //import faker from "faker";
+
+const clasificacionCtrl = new Clasificacion();
 
 ChartJS.register(
   CategoryScale,
@@ -48,6 +52,9 @@ export const data = {
 };
 
 export const AppConversionRates = () => {
+  const { user } = useAuth();
+  //const establesimientoId = user.establesimiento.id;
+
   return (
     <Paper elevation={3}>
       <Box

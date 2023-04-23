@@ -1,17 +1,20 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { useState } from "react";
+import {
+  Avatar,
+  IconButton,
+  Button,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  Paper,
+  InputAdornment,
+} from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Paper } from "@mui/material";
-import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import NextLink from "next/link";
 import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./inicio.form.js";
@@ -19,6 +22,10 @@ import { Auth } from "../../api";
 import { useRouter } from "next/router.js";
 import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "../../hooks";
+import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import { blue } from "@mui/material/colors";
 
 const authCtrl = new Auth();
 
@@ -45,6 +52,7 @@ const theme = createTheme();
 const PaginaInicio = () => {
   const { login, user } = useAuth();
   const router = useRouter();
+
   if (user) {
     router.push("/");
     return null;
@@ -63,6 +71,7 @@ const PaginaInicio = () => {
     onSubmit: async (formValue) => {
       try {
         const response = await authCtrl.login(formValue);
+        console.log(response);
         if (response.jwt) {
           login(response.jwt);
           router.push("/");
@@ -74,6 +83,8 @@ const PaginaInicio = () => {
       }
     },
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   return (
     <ThemeProvider theme={theme}>
@@ -132,12 +143,35 @@ const PaginaInicio = () => {
                 fullWidth
                 name="password"
                 label="Contraseña"
-                type="password"
+                //type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="current-password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 error={formik.errors.password}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        // onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? (
+                          <VisibilityOffOutlinedIcon
+                            sx={{ color: blue[800], fontSize: 35 }}
+                          />
+                        ) : (
+                          <VisibilityOutlinedIcon
+                            sx={{ color: blue[800], fontSize: 35 }}
+                          />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <FormControlLabel

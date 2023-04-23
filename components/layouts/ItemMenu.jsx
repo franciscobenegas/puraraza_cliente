@@ -24,6 +24,9 @@ import { useRouter } from "next/router";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import AddHomeWorkOutlinedIcon from "@mui/icons-material/AddHomeWorkOutlined";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
+import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
+import AddHomeOutlinedIcon from "@mui/icons-material/AddHomeOutlined";
+import Link from "next/link";
 
 const data = [
   { icon: <BlockOutlinedIcon />, label: "Mortandad" },
@@ -40,6 +43,8 @@ const data2 = [
   { icon: <MonitorWeightOutlinedIcon />, label: "Motivo Pesaje" },
   { icon: <ArrowBackOutlinedIcon />, label: "Motivo Entrada" },
   { icon: <ArrowForwardOutlinedIcon />, label: "Motivo Salida" },
+  { icon: <AddHomeOutlinedIcon />, label: "Establesimiento" },
+  { icon: <PersonAddOutlinedIcon />, label: "Colaboradores" },
 ];
 
 const FireNav = styled(List)({
@@ -57,11 +62,15 @@ const FireNav = styled(List)({
 });
 
 export const ItemMenu = () => {
-  const [open, setOpen] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
   const router = useRouter();
   const irMenu = (menu) => {
+    console.log(menu);
     switch (menu) {
+      case "Mortandad":
+        router.push("/partediaria/mortandad");
+        break;
       case "Motivo Entrada":
         router.push("/configuracion/motivoentrada");
         break;
@@ -235,6 +244,7 @@ export const ItemMenu = () => {
                           fontSize: 14,
                           fontWeight: "medium",
                         }}
+                        onClick={() => irMenu(item.label)}
                       />
                     </ListItemButton>
                   ))}
@@ -257,7 +267,7 @@ export const ItemMenu = () => {
                       lineHeight: "20px",
                       mb: "2px",
                     }}
-                    secondary="Clasificacion, Causa Mortandad, Motivo Entrada, Motivo Salida, Motivo Pesaje"
+                    secondary="Clasificacion, Establesimiento, Causa Mortandad, Motivo Entrada, Motivo Salida, Motivo Pesaje"
                     secondaryTypographyProps={{
                       noWrap: true,
                       fontSize: 12,

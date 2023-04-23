@@ -1,14 +1,13 @@
-import { ENV, authFetch } from "@/utils";
+import { ENV, authFetch } from "../utils";
 
-export class Clasificacion {
-  async getClasificacion(establesimientoId) {
+export class ApiMortandad {
+  async getAll(establesimientoId) {
     try {
       const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=id`;
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CLASIFICACION}?${filters}`;
-
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.MORTANDAD}?${filters}`;
       const response = await authFetch(url);
       const result = await response.json();
-      //console.log(result.data);
+
       if (response.status !== 200) throw result;
 
       return result;
@@ -17,31 +16,22 @@ export class Clasificacion {
     }
   }
 
-  async postClasificacion(data, establesimientoId, user_upd) {
+  async postData(data) {
     try {
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CLASIFICACION}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.MORTANDAD}`;
       const params = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          data: {
-            ...data,
-            stock: 0,
-            establesimiento: establesimientoId,
-            user_upd: user_upd,
-          },
-        }),
+        body: JSON.stringify(data),
       };
 
-      const response = await authFetch(url, params).then((response) =>
-        response.json()
-      );
+      const response = await authFetch(url, params);
+      const result = await response.json();
 
-      if (response.jwt === "") throw "Error no se pudo dar de alta Usuario.";
-
-      return response;
+      if (response.status !== 200) throw response;
+      return result;
     } catch (error) {
       throw error;
     }
@@ -49,7 +39,7 @@ export class Clasificacion {
 
   async update(data, id) {
     try {
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CLASIFICACION}/${id}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.MORTANDAD}/${id}`;
       const params = {
         method: "PUT",
         headers: {
@@ -68,7 +58,7 @@ export class Clasificacion {
 
   async delete(id) {
     try {
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CLASIFICACION}/${id}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.MORTANDAD}/${id}`;
       const params = {
         method: "DELETE",
       };

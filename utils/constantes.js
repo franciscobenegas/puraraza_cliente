@@ -1,6 +1,12 @@
 export const ENV = {
-  SERVER_HOST: "http://localhost:1337",
-  API_URL: "http://localhost:1337/api",
+  // Base de Datos Local
+  //SERVER_HOST: "http://localhost:1337",
+  //API_URL: "http://localhost:1337/api",
+
+  //   // Base de Datos Nube
+  SERVER_HOST: "https://strapi-production-3882.up.railway.app",
+  API_URL: "https://strapi-production-3882.up.railway.app/api",
+
   ENDPOINTS: {
     AUTH: {
       REGISTER: "auth/local/register",
@@ -15,6 +21,7 @@ export const ENV = {
     MOTIVO_PESAJE: "motivo-pesajes",
     MOTIVO_ENTRADA: "motivo-entradas",
     MOTIVO_SALIDA: "motivo-salidas",
+    MORTANDAD: "mortandads",
   },
   TOKEN: "Token_PuraRazapp",
   CART: "cart",

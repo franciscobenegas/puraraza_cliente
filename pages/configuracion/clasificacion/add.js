@@ -78,7 +78,20 @@ const AddPageClasificacion = () => {
                   error={formik.errors.nombre}
                 />
               </Grid>
-
+              <Grid item xs={12}>
+                <TextField
+                  variant="filled"
+                  autoComplete="given-name"
+                  name="precio"
+                  required
+                  fullWidth
+                  label="Precio Estimado"
+                  //autoFocus
+                  value={formik.values.precio}
+                  onChange={formik.handleChange}
+                  error={formik.errors.precio}
+                />
+              </Grid>
               <Grid container mt="15px">
                 <Grid Item xs={6} pr="15px">
                   <Button
