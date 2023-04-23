@@ -12,7 +12,10 @@ import { Paper } from "@mui/material";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import NextLink from "next/link";
 import { useFormik } from "formik";
-import { initialValues, validationSchema } from "./registro.form.js";
+import {
+  initialValues,
+  validationSchema,
+} from "../../components/ui/login/registro.form.js";
 import { Auth } from "../../api";
 import { useRouter } from "next/router.js";
 import { useAuth } from "../../hooks";

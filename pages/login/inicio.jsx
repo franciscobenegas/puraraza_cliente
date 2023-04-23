@@ -17,7 +17,10 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import NextLink from "next/link";
 import { useFormik } from "formik";
-import { initialValues, validationSchema } from "./inicio.form.js";
+import {
+  initialValues,
+  validationSchema,
+} from "../../components/ui/login/inicio.form.js";
 import { Auth } from "../../api";
 import { useRouter } from "next/router.js";
 import { toast, ToastContainer } from "react-toastify";

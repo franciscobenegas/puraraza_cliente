@@ -8,7 +8,10 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { initialValues, validationSchema } from "./add.form.js";
+import {
+  initialValues,
+  validationSchema,
+} from "../../../components/ui/clasificacion/add.form.js";
 import { useFormik } from "formik";
 import { Clasificacion } from "@/api";
 import { useAuth } from "../../../hooks";
