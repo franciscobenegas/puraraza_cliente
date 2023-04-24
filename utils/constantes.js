@@ -3,7 +3,7 @@ export const ENV = {
   //SERVER_HOST: "http://localhost:1337",
   //API_URL: "http://localhost:1337/api",
 
-  //   // Base de Datos Nube
+  // Base de Datos Nube
   SERVER_HOST: "https://strapi-production-3882.up.railway.app",
   API_URL: "https://strapi-production-3882.up.railway.app/api",
 

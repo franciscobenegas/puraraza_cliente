@@ -7,6 +7,7 @@ import {
   TextField,
   Button,
   MenuItem,
+  Input,
 } from "@mui/material";
 import { initialValues, validationSchema } from "./MortandadAbm.form";
 import { useFormik } from "formik";
@@ -24,6 +25,9 @@ export const MortandadAbm = (props) => {
   const establesimientoId = user.establesimiento.id;
   const [classi, setclassi] = useState([]);
   const [causaMortandad, setCausaMortandad] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+
   const formik = useFormik({
     initialValues: initialValues(dato),
     validationSchema: validationSchema(),
@@ -105,6 +109,14 @@ export const MortandadAbm = (props) => {
       setReload(false);
     })();
   }, []);
+
+  useEffect(() => {
+    if (selectedImage) {
+      console.log(selectedImage.name);
+      setImageUrl(URL.createObjectURL(selectedImage));
+      console.log(imageUrl);
+    }
+  }, [selectedImage]);
 
   if (!classi) {
     return <Loading />;
@@ -246,6 +258,22 @@ export const MortandadAbm = (props) => {
                 );
               })}
             </TextField>
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              name="image"
+              fullWidth
+              //label="Imagen"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setSelectedImage(e.target.files[0])}
+              //value={formik.values.causa_mortandad}
+              //onChange={formik.handleChange}
+              //error={formik.errors.causa_mortandad}
+              //disabled={mode === "DLT" ? true : false}
+            />
           </Grid>
 
           <Grid container mt="15px">
