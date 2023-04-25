@@ -74,7 +74,6 @@ const PaginaInicio = () => {
     onSubmit: async (formValue) => {
       try {
         const response = await authCtrl.login(formValue);
-        console.log(response);
         if (response.jwt) {
           login(response.jwt);
           router.push("/");

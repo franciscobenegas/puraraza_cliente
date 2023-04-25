@@ -66,10 +66,12 @@ export const ItemMenu = () => {
   const [open2, setOpen2] = React.useState(false);
   const router = useRouter();
   const irMenu = (menu) => {
-    console.log(menu);
     switch (menu) {
       case "Mortandad":
         router.push("/partediaria/mortandad");
+        break;
+      case "Nacimiento":
+        router.push("/partediaria/nacimiento");
         break;
       case "Motivo Entrada":
         router.push("/configuracion/motivoentrada");

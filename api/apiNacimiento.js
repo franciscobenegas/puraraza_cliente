@@ -1,12 +1,13 @@
 import { ENV, authFetch } from "../utils";
 
-export class ApiMotivoPesaje {
+export class ApiNacimiento {
   async getAll(establesimientoId) {
     try {
       const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=id`;
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.MOTIVO_PESAJE}?${filters}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.NACIMIENTO}?${filters}`;
       const response = await authFetch(url);
       const result = await response.json();
+
       if (response.status !== 200) throw result;
 
       return result;
@@ -17,7 +18,7 @@ export class ApiMotivoPesaje {
 
   async postData(data) {
     try {
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.MOTIVO_PESAJE}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.NACIMIENTO}`;
       const params = {
         method: "POST",
         headers: {
@@ -38,7 +39,7 @@ export class ApiMotivoPesaje {
 
   async update(data, id) {
     try {
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.MOTIVO_PESAJE}/${id}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.NACIMIENTO}/${id}`;
       const params = {
         method: "PUT",
         headers: {
@@ -57,7 +58,7 @@ export class ApiMotivoPesaje {
 
   async delete(id) {
     try {
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.MOTIVO_PESAJE}/${id}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.NACIMIENTO}/${id}`;
       const params = {
         method: "DELETE",
       };

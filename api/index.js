@@ -8,3 +8,4 @@ export * from "./apiMotivoPesaje";
 export * from "./apiMotivoEntrada";
 export * from "./apiMotivoSalida";
 export * from "./apiMortandad";
+export * from "./apiNacimiento";

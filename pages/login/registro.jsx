@@ -58,7 +58,7 @@ const PaginaRegistro = () => {
         await authCtrl.register(formValue);
         router.push("/login/inicio");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
   });

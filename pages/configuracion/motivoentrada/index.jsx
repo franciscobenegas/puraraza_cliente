@@ -96,7 +96,6 @@ const MotivoEntradaPage = () => {
     (async () => {
       const response = await ApiMotivoEntradaCtrl.getAll(establesimientoId);
       const result = await response.data;
-      console.log(result);
       setData(result);
       setReload(false);
     })();

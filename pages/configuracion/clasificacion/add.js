@@ -36,7 +36,7 @@ const AddPageClasificacion = () => {
         );
         router.push("/configuracion/clasificacion");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
   });

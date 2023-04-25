@@ -97,7 +97,6 @@ const MotivoPesajePage = () => {
     (async () => {
       const response = await ApiMotivoPesajeCtrl.getAll(establesimientoId);
       const result = await response.data;
-      console.log(result);
       setData(result);
       setReload(false);
     })();

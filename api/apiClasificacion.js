@@ -5,12 +5,9 @@ export class Clasificacion {
     try {
       const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=id`;
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CLASIFICACION}?${filters}`;
-
       const response = await authFetch(url);
       const result = await response.json();
-      //console.log(result.data);
       if (response.status !== 200) throw result;
-
       return result;
     } catch (error) {
       throw error;
