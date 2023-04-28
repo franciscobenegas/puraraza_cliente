@@ -158,7 +158,7 @@ const NacimientoHome = () => {
           mb={3}
         >
           <Typography variant="h4" gutterBottom>
-            Listado Mortandad
+            Listado Nacimiento
           </Typography>
           <Button
             variant="contained"
