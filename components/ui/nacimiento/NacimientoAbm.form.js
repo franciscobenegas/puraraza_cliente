@@ -15,9 +15,9 @@ export function initialValues(dato) {
 
 export function validationSchema() {
   return Yup.object({
-    //nombre: Yup.string().required(true),
     fecha: Yup.date().required(true),
     tipo_raza: Yup.string().required(true),
     sexo: Yup.string().required(true),
+    tipo_Parto: Yup.string().required(true),
   });
 }

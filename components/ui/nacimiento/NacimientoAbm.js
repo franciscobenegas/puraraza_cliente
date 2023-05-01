@@ -139,7 +139,6 @@ export const NacimientoAbm = (props) => {
             <TextField
               variant="outlined"
               name="peso"
-              required
               fullWidth
               label="Peso Kg."
               autoFocus={mode === "DLT" ? false : true}
