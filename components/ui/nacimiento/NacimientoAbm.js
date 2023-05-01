@@ -141,7 +141,7 @@ export const NacimientoAbm = (props) => {
               name="peso"
               required
               fullWidth
-              label="Peso"
+              label="Peso Kg."
               autoFocus={mode === "DLT" ? false : true}
               value={formik.values.peso}
               onChange={formik.handleChange}
