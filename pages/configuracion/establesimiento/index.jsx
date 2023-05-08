@@ -27,6 +27,13 @@ const notify = () => {
   });
 };
 
+const notifyError = () => {
+  toast.error("Error en la Actualizacion, consulte con el Administrador...", {
+    position: toast.POSITION.TOP_RIGHT,
+    theme: "colored",
+  });
+};
+
 const EstablesimientoPage = () => {
   const { user } = useAuth();
   const establesimientoId = user.establesimiento.id;
@@ -59,6 +66,7 @@ const EstablesimientoPage = () => {
         notify();
       } catch (error) {
         console.error(error);
+        notifyError();
       }
     },
   });
