@@ -92,14 +92,16 @@ const NacimientoHome = () => {
       headerName: "Accion",
       getActions: (params) => [
         <GridActionsCellItem
+          sx={{ fontSize: 14 }}
           icon={<ModeEditOutlineOutlinedIcon />}
           label="Modificar"
           showInMenu
           onClick={() => accionItem(params.id, "UPD", params)}
         />,
         <GridActionsCellItem
+          sx={{ fontSize: 14, color: "rgb(220, 20, 60)" }}
           icon={<DeleteIcon color="error" />}
-          label=<Typography color="error">Eliminar</Typography>
+          label="Eliminar" //<Typography color="error">Eliminar</Typography>
           showInMenu
           onClick={() => accionItem(params.id, "DLT", params)}
         />,

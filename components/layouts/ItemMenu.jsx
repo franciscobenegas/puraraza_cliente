@@ -67,6 +67,9 @@ export const ItemMenu = () => {
   const router = useRouter();
   const irMenu = (menu) => {
     switch (menu) {
+      case "Establesimiento":
+        router.push("/configuracion/establesimiento");
+        break;
       case "Mortandad":
         router.push("/partediaria/mortandad");
         break;

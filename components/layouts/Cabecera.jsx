@@ -15,11 +15,9 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useAuth } from "../../hooks";
-import { Divider } from "@mui/material";
-import { ENV } from "../../utils";
-import { useRouter } from "next/router.js";
+import { Divider, Typography } from "@mui/material";
 import Switch from "@mui/material/Switch";
-//import { styled } from "@mui/material/styles";
+import { useRouter } from "next/router";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -110,6 +108,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export const LayoutPrincipal = (props) => {
   const { logout, user } = useAuth();
+  const router = useRouter();
   const { drawerWidth, handleDrawerToggle } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -134,6 +133,18 @@ export const LayoutPrincipal = (props) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const irMenu = (menu) => {
+    console.log(menu);
+    handleMenuClose();
+    switch (menu) {
+      case "INICIO":
+        router.push("/");
+        break;
+
+      //default:
+      //break;
+    }
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -151,10 +162,18 @@ export const LayoutPrincipal = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>
-        {user.nombre} {user.apellido}
-      </MenuItem>
+      <Box sx={{ my: 1.5, px: 2.5 }}>
+        <Typography variant="subtitle2" color="initial" noWrap>
+          {user.nombre} {user.apellido}
+        </Typography>
+        <Typography variant="body2" color="initial" noWrap>
+          {user.establesimiento.nombre}
+        </Typography>
+      </Box>
+      <Divider />
+      <MenuItem onClick={() => irMenu("INICIO")}>Inicio</MenuItem>
       <MenuItem onClick={handleMenuClose}>Mi Cuenta</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Configuracion</MenuItem>
       <Divider />
       <MenuItem onClick={logout}>Cerrar Sesion</MenuItem>
     </Menu>
