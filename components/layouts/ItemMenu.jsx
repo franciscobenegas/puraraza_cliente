@@ -44,7 +44,7 @@ const data2 = [
   { icon: <ArrowBackOutlinedIcon />, label: "Motivo Entrada" },
   { icon: <ArrowForwardOutlinedIcon />, label: "Motivo Salida" },
   { icon: <AddHomeOutlinedIcon />, label: "Establesimiento" },
-  { icon: <PersonAddOutlinedIcon />, label: "Colaboradores" },
+  { icon: <PersonAddOutlinedIcon />, label: "Usuarios" },
 ];
 
 const FireNav = styled(List)({

@@ -112,7 +112,7 @@ export const LayoutPrincipal = (props) => {
   const { drawerWidth, handleDrawerToggle } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const establesimientoId = user.establesimiento?.id;
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -167,7 +167,7 @@ export const LayoutPrincipal = (props) => {
           {user.nombre} {user.apellido}
         </Typography>
         <Typography variant="body2" color="initial" noWrap>
-          {user.establesimiento.nombre}
+          {user.establesimiento?.nombre}
         </Typography>
       </Box>
       <Divider />
@@ -230,6 +230,10 @@ export const LayoutPrincipal = (props) => {
       </MenuItem>
     </Menu>
   );
+
+  //if (!establesimientoId) {
+  //router.push("/configuracion/establesimiento");
+  //}
 
   return (
     <Box sx={{ flexGrow: 1 }}>

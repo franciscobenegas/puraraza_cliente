@@ -1,9 +1,19 @@
 import Head from "next/head";
 import { ResponsiveDrawer } from "@/components/layouts";
-import { Divider, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { AppWidgetSummary, AppConversionRates, AppPie } from "../components/ui";
+import { useAuth } from "/hooks";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const { user } = useAuth();
+  const router = useRouter();
+  const establesimientoId = user.establesimiento?.id;
+
+  if (!establesimientoId) {
+    router.push("/configuracion/establesimiento");
+  }
+
   return (
     <>
       <Head>

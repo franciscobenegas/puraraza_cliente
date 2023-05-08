@@ -34,15 +34,21 @@ const notifyError = () => {
   });
 };
 
+const recargar = () => {
+  window.location.reload(true);
+};
+
 const EstablesimientoPage = () => {
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user.establesimiento?.id;
+  const userId = user.id;
+
   let body = {
     data: {
-      nombre: user.establesimiento.nombre,
-      ruc: user.establesimiento.ruc,
-      direccion: user.establesimiento.direccion,
-      telefono: user.establesimiento.telefono,
+      nombre: user.establesimiento?.nombre || "",
+      ruc: user.establesimiento?.ruc || "",
+      direccion: user.establesimiento?.direccion || "",
+      telefono: user.establesimiento?.telefono || "",
     },
   };
 
@@ -51,22 +57,42 @@ const EstablesimientoPage = () => {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log("Acutlizar Datos");
-      try {
-        let body2 = {
-          data: {
-            nombre: formValue.nombre,
-            ruc: formValue.ruc,
-            direccion: formValue.direccion,
-            telefono: formValue.telefono,
-          },
-        };
+      if (establesimientoId) {
+        try {
+          let body2 = {
+            data: {
+              nombre: formValue.nombre,
+              ruc: formValue.ruc,
+              direccion: formValue.direccion,
+              telefono: formValue.telefono,
+            },
+          };
 
-        await ApiEstablesimientoCtrl.update(body2, establesimientoId);
-        notify();
-      } catch (error) {
-        console.error(error);
-        notifyError();
+          await ApiEstablesimientoCtrl.update(body2, establesimientoId);
+          notify();
+        } catch (error) {
+          console.error(error);
+          notifyError();
+        }
+      } else {
+        try {
+          let body2 = {
+            data: {
+              users: userId,
+              nombre: formValue.nombre,
+              ruc: formValue.ruc,
+              direccion: formValue.direccion,
+              telefono: formValue.telefono,
+            },
+          };
+
+          await ApiEstablesimientoCtrl.postData(body2);
+          notify();
+          recargar();
+        } catch (error) {
+          console.error(error);
+          notifyError();
+        }
       }
     },
   });
@@ -79,12 +105,16 @@ const EstablesimientoPage = () => {
           direction="row"
           alignItems="center"
           justifyContent="space-between"
-          mb={3}
         >
           <Typography variant="h4" gutterBottom>
             Establesimiento
           </Typography>
         </Stack>
+        <Typography variant="body1" mb={3} sx={{ color: "red" }}>
+          {establesimientoId
+            ? null
+            : "Es necesario cargar un establesimiento para que el sistema pueda realiar las configuraicones necesarias"}
+        </Typography>
         <Divider />
 
         <Box
@@ -159,7 +189,7 @@ const EstablesimientoPage = () => {
                   variant="contained"
                   sx={{ mt: 5, borderRadius: 10 }}
                 >
-                  Actualizar
+                  {establesimientoId ? "Actualizar" : "Guardar"}
                 </Button>
               </Grid>
             </Grid>
