@@ -164,7 +164,7 @@ export const ItemMenu = () => {
                   onClick={() => irMenu("INICIO")}
                 />
               </ListItemButton>
-              <Tooltip title="Project Settings">
+              <Tooltip title="Configuraciones">
                 <IconButton
                   size="large"
                   sx={{
