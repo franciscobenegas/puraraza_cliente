@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 export default function Home() {
   const { user } = useAuth();
   const router = useRouter();
-  const establesimientoId = user.establesimiento?.id;
+  const establesimientoId = user?.establesimiento?.id;
 
   if (!establesimientoId) {
     router.push("/configuracion/establesimiento");

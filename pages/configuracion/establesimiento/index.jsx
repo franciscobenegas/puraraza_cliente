@@ -40,15 +40,15 @@ const recargar = () => {
 
 const EstablesimientoPage = () => {
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento?.id;
-  const userId = user.id;
+  const establesimientoId = user?.establesimiento?.id;
+  const userId = user?.id;
 
   let body = {
     data: {
-      nombre: user.establesimiento?.nombre || "",
-      ruc: user.establesimiento?.ruc || "",
-      direccion: user.establesimiento?.direccion || "",
-      telefono: user.establesimiento?.telefono || "",
+      nombre: user?.establesimiento?.nombre || "",
+      ruc: user?.establesimiento?.ruc || "",
+      direccion: user?.establesimiento?.direccion || "",
+      telefono: user?.establesimiento?.telefono || "",
     },
   };
 
