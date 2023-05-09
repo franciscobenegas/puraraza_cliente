@@ -1,4 +1,3 @@
-//import React from 'react'
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
@@ -27,6 +26,8 @@ import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import AddHomeOutlinedIcon from "@mui/icons-material/AddHomeOutlined";
 import Link from "next/link";
+import { toast, ToastContainer } from "react-toastify";
+import { useAuth } from "@/hooks";
 
 const data = [
   { icon: <BlockOutlinedIcon />, label: "Mortandad" },
@@ -61,11 +62,26 @@ const FireNav = styled(List)({
   },
 });
 
+const notifyError = () => {
+  toast.error("Debe cargar los datos de Establesimiento", {
+    position: toast.POSITION.TOP_RIGHT,
+    theme: "colored",
+  });
+};
+
 export const ItemMenu = () => {
+  const { user } = useAuth();
+  const establesimientoId = user?.establesimiento?.id;
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const router = useRouter();
   const irMenu = (menu) => {
+    console.log(menu);
+    console.log(establesimientoId);
+    if (!establesimientoId) {
+      notifyError();
+      return;
+    }
     switch (menu) {
       case "Establesimiento":
         router.push("/configuracion/establesimiento");
@@ -101,6 +117,7 @@ export const ItemMenu = () => {
   };
   return (
     <Box sx={{ display: "flex" }}>
+      <ToastContainer autoClose={8000} />
       <ThemeProvider
         theme={createTheme({
           components: {

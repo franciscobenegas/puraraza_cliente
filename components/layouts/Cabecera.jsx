@@ -166,8 +166,16 @@ export const LayoutPrincipal = (props) => {
         <Typography variant="subtitle2" color="initial" noWrap>
           {user.nombre} {user.apellido}
         </Typography>
-        <Typography variant="body2" color="initial" noWrap>
+        <Typography
+          variant="body2"
+          color="primary"
+          sx={{ fontWeight: "bold", fontSize: 18 }}
+          noWrap
+        >
           {user.establesimiento?.nombre}
+        </Typography>
+        <Typography variant="body2" color="initial" noWrap>
+          {user.email}
         </Typography>
       </Box>
       <Divider />

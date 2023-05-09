@@ -87,8 +87,8 @@ const EstablesimientoPage = () => {
           };
 
           await ApiEstablesimientoCtrl.postData(body2);
-          notify();
           recargar();
+          notify();
         } catch (error) {
           console.error(error);
           notifyError();
