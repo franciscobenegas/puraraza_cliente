@@ -112,7 +112,7 @@ export const LayoutPrincipal = (props) => {
   const { drawerWidth, handleDrawerToggle } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const establesimientoId = user.establesimiento?.id;
+  //const establesimientoId = user.establesimiento?.id;
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -134,7 +134,6 @@ export const LayoutPrincipal = (props) => {
   };
 
   const irMenu = (menu) => {
-    console.log(menu);
     handleMenuClose();
     switch (menu) {
       case "INICIO":
@@ -263,15 +262,6 @@ export const LayoutPrincipal = (props) => {
             <MenuIcon />
           </IconButton>
 
-          <Search sx={{ width: "450px!Important" }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Buscar..."
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton

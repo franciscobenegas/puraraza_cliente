@@ -25,7 +25,6 @@ import AddHomeWorkOutlinedIcon from "@mui/icons-material/AddHomeWorkOutlined";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import AddHomeOutlinedIcon from "@mui/icons-material/AddHomeOutlined";
-import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "@/hooks";
 
@@ -76,13 +75,14 @@ export const ItemMenu = () => {
   const [open2, setOpen2] = React.useState(false);
   const router = useRouter();
   const irMenu = (menu) => {
-    console.log(menu);
-    console.log(establesimientoId);
     if (!establesimientoId) {
       notifyError();
       return;
     }
     switch (menu) {
+      case "Entrada":
+        router.push("/partediaria/entrada");
+        break;
       case "Establesimiento":
         router.push("/configuracion/establesimiento");
         break;

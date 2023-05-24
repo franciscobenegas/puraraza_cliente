@@ -9,3 +9,5 @@ export * from "./apiMotivoEntrada";
 export * from "./apiMotivoSalida";
 export * from "./apiMortandad";
 export * from "./apiNacimiento";
+export * from "./apiEstablesimiento";
+export * from "./apiEntrada";

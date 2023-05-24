@@ -31,7 +31,6 @@ export function AuthProvider(props) {
   }, []);
 
   const logout = () => {
-    console.log("logout en AuthContext");
     tokenCtrl.removeToken();
     setToken(null);
     setUser(null);

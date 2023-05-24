@@ -8,20 +8,29 @@ import {
   Button,
   MenuItem,
 } from "@mui/material";
-import { initialValues, validationSchema } from "./NacimientoAbm.form";
+import { initialValues, validationSchema } from "./EntradaAbm.form";
 import { useFormik } from "formik";
-import { ApiNacimiento, ApiTipoRaza } from "../../../api";
+import {
+  ApiNacimiento,
+  ApiEntrada,
+  Clasificacion,
+  ApiMotivoEntrada,
+} from "../../../api";
 import { Loading } from "../Loading";
 import { useAuth } from "@/hooks";
 
 const ApiNacimientoCtrl = new ApiNacimiento();
-const ApiTipoRazaCtrl = new ApiTipoRaza();
+const ApiEntradaCtrl = new ApiEntrada();
+const ApiMotivoEntradaCtrl = new ApiMotivoEntrada();
+const clasificacionCtrl = new Clasificacion();
 
-export const NacimientoAbm = (props) => {
+export const EntradaAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
   const { user } = useAuth();
   const establesimientoId = user.establesimiento.id;
   const [tipoRaza, setTipoRaza] = useState([]);
+  const [clasificacion, setClasificacion] = useState([]);
+  const [motivoEntrada, setMotivoEntrada] = useState([]);
 
   const formik = useFormik({
     initialValues: initialValues(dato),
@@ -33,17 +42,15 @@ export const NacimientoAbm = (props) => {
           let body = {
             data: {
               fecha: formValue.fecha,
-              tipo_raza: formValue.tipo_raza,
-              peso: formValue.peso,
-              sexo: formValue.sexo,
-              tipo_Parto: formValue.tipo_Parto,
-              nroCaravana: formValue.nroCaravana,
-              nroCaravanaMadre: formValue.nroCaravanaMadre,
+              factura: formValue.factura,
+              clasificacion: formValue.clasificacion,
+              motivo_entrada: formValue.motivo_entrada,
+              cantidad: formValue.cantidad,
               establesimiento: establesimientoId,
               user_upd: user.username,
             },
           };
-          await ApiNacimientoCtrl.postData(body);
+          await ApiEntradaCtrl.postData(body);
           formik.handleReset();
           setReload(true);
           setOpen(false);
@@ -54,7 +61,7 @@ export const NacimientoAbm = (props) => {
 
       if (mode === "DLT") {
         try {
-          await ApiNacimientoCtrl.delete(codId);
+          await ApiEntradaCtrl.delete(codId);
           formik.handleReset();
           setReload(true);
           setOpen(false);
@@ -67,18 +74,16 @@ export const NacimientoAbm = (props) => {
           let body = {
             data: {
               fecha: formValue.fecha,
-              tipo_raza: formValue.tipo_raza,
-              peso: formValue.peso,
-              sexo: formValue.sexo,
-              tipo_Parto: formValue.tipo_Parto,
-              nroCaravana: formValue.nroCaravana,
-              nroCaravanaMadre: formValue.nroCaravanaMadre,
+              factura: formValue.factura,
+              clasificacion: formValue.clasificacion,
+              motivo_entrada: formValue.motivo_entrada,
+              cantidad: formValue.cantidad,
               establesimiento: establesimientoId,
               user_upd: user.username,
             },
           };
 
-          await ApiNacimientoCtrl.update(body, codId);
+          await ApiEntradaCtrl.update(body, codId);
           setReload(true);
           setOpen(false);
         } catch (error) {
@@ -90,14 +95,26 @@ export const NacimientoAbm = (props) => {
 
   useEffect(() => {
     (async () => {
-      const response = await ApiTipoRazaCtrl.getAll(establesimientoId);
+      const response = await clasificacionCtrl.getClasificacion(
+        establesimientoId
+      );
       const result = await response.data;
-      setTipoRaza(result);
-      setReload(false);
+      setClasificacion(result);
     })();
   }, []);
 
-  if (!tipoRaza) {
+  useEffect(() => {
+    (async () => {
+      const response = await ApiMotivoEntradaCtrl.getAll(establesimientoId);
+      const result = await response.data;
+      setMotivoEntrada(result);
+    })();
+  }, []);
+
+  if (!clasificacion) {
+    return <Loading />;
+  }
+  if (!motivoEntrada) {
     return <Loading />;
   }
 
@@ -138,92 +155,12 @@ export const NacimientoAbm = (props) => {
           <Grid item xs={6}>
             <TextField
               variant="outlined"
-              name="peso"
+              name="factura"
               fullWidth
-              label="Peso Kg."
-              value={formik.values.peso}
+              label="Nro Factura/Documento"
+              value={formik.values.factura}
               onChange={formik.handleChange}
-              error={formik.errors.peso}
-              disabled={mode === "DLT" ? true : false}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              variant="outlined"
-              name="sexo"
-              select
-              fullWidth
-              label="Sexo"
-              value={formik.values.sexo}
-              onChange={formik.handleChange}
-              error={formik.errors.sexo}
-              disabled={mode === "DLT" ? true : false}
-            >
-              <MenuItem key="Macho" value="Macho">
-                Macho
-              </MenuItem>
-              <MenuItem key="Hembra" value="Hembra">
-                Hembra
-              </MenuItem>
-            </TextField>
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              variant="outlined"
-              name="tipo_Parto"
-              select
-              fullWidth
-              label="Tipo de Parto"
-              value={formik.values.tipo_Parto}
-              onChange={formik.handleChange}
-              error={formik.errors.tipo_tipo_Parto}
-              disabled={mode === "DLT" ? true : false}
-            >
-              <MenuItem key="Normal" value="Normal">
-                Normal
-              </MenuItem>
-              <MenuItem key="Distocico" value="Distocico">
-                Distocico
-              </MenuItem>
-            </TextField>
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              variant="outlined"
-              name="nroCaravana"
-              fullWidth
-              label={
-                mode === "ADD"
-                  ? "Nro Caravana"
-                  : mode === "UPD"
-                  ? "Nro Caravana"
-                  : null
-              }
-              value={formik.values.nroCaravana}
-              onChange={formik.handleChange}
-              error={formik.errors.nroCaravana}
-              disabled={mode === "DLT" ? true : false}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              variant="outlined"
-              name="nroCaravanaMadre"
-              fullWidth
-              label={
-                mode === "ADD"
-                  ? "Nro Caravana Madre"
-                  : mode === "UPD"
-                  ? "Nro Caravana Madre"
-                  : null
-              }
-              value={formik.values.nroCaravanaMadre}
-              onChange={formik.handleChange}
-              error={formik.errors.nroCaravanaMadre}
+              error={formik.errors.factura}
               disabled={mode === "DLT" ? true : false}
             />
           </Grid>
@@ -231,16 +168,17 @@ export const NacimientoAbm = (props) => {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              name="tipo_raza"
+              name="clasificacion"
               fullWidth
-              label="Tipo Raza"
+              label="Clasificaicon"
+              required
               select
-              value={formik.values.tipo_raza}
+              value={formik.values.clasificacion}
               onChange={formik.handleChange}
-              error={formik.errors.tipo_raza}
+              error={formik.errors.clasificacion}
               disabled={mode === "DLT" ? true : false}
             >
-              {tipoRaza.map((dato) => {
+              {clasificacion.map((dato) => {
                 return (
                   <MenuItem key={dato.id} value={dato.id}>
                     {dato.attributes.nombre}
@@ -248,6 +186,43 @@ export const NacimientoAbm = (props) => {
                 );
               })}
             </TextField>
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              name="motivo_entrada"
+              required
+              fullWidth
+              label="Motivo Entrada"
+              select
+              value={formik.values.motivo_entrada}
+              onChange={formik.handleChange}
+              error={formik.errors.motivo_entrada}
+              disabled={mode === "DLT" ? true : false}
+            >
+              {motivoEntrada.map((dato) => {
+                return (
+                  <MenuItem key={dato.id} value={dato.id}>
+                    {dato.attributes.nombre}
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              name="cantidad"
+              fullWidth
+              required
+              label="Cantidad"
+              value={formik.values.cantidad}
+              onChange={formik.handleChange}
+              error={formik.errors.cantidad}
+              disabled={mode === "DLT" ? true : false}
+            />
           </Grid>
 
           <Grid container mt="15px">

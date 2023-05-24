@@ -1,12 +1,13 @@
 import { ENV, authFetch } from "../utils";
 
-export class ApiTipoRaza {
+export class ApiEntrada {
   async getAll(establesimientoId) {
     try {
       const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=id`;
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.TIPO_RAZA}?${filters}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ENTRADA}?${filters}`;
       const response = await authFetch(url);
       const result = await response.json();
+
       if (response.status !== 200) throw result;
 
       return result;
@@ -17,7 +18,7 @@ export class ApiTipoRaza {
 
   async postData(data) {
     try {
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.TIPO_RAZA}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ENTRADA}`;
       const params = {
         method: "POST",
         headers: {
@@ -38,7 +39,7 @@ export class ApiTipoRaza {
 
   async update(data, id) {
     try {
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.TIPO_RAZA}/${id}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ENTRADA}/${id}`;
       const params = {
         method: "PUT",
         headers: {
@@ -57,7 +58,7 @@ export class ApiTipoRaza {
 
   async delete(id) {
     try {
-      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.TIPO_RAZA}/${id}`;
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ENTRADA}/${id}`;
       const params = {
         method: "DELETE",
       };

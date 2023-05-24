@@ -17,9 +17,12 @@ import {
 } from "../../../components/ui/establesimiento/EstablesimientoAbm.form";
 import { useFormik } from "formik";
 import { ApiEstablesimiento } from "@/api/apiEstablesimiento";
+import { Clasificacion } from "@/api";
 import { toast, ToastContainer } from "react-toastify";
 
 const ApiEstablesimientoCtrl = new ApiEstablesimiento();
+const clasificacionCtrl = new Clasificacion();
+
 const notify = () => {
   toast.success("Datos Actualizado exitosamente!!!", {
     position: toast.POSITION.TOP_RIGHT,
@@ -87,12 +90,69 @@ const EstablesimientoPage = () => {
           };
 
           await ApiEstablesimientoCtrl.postData(body2);
-          recargar();
+
+          //recargar();
           notify();
         } catch (error) {
           console.error(error);
           notifyError();
         }
+
+        try {
+          let clasificacionData = {
+            data: [
+              {
+                nombre: "Vaca",
+                precio: 0,
+              },
+              {
+                nombre: "Toro",
+                precio: 0,
+              },
+              {
+                nombre: "Vaquilla",
+                precio: 0,
+              },
+              {
+                nombre: "Novillo",
+                precio: 0,
+              },
+              {
+                nombre: "Desmamante Macho",
+                precio: 0,
+              },
+              {
+                nombre: "Desmamante Hembra",
+                precio: 0,
+              },
+              {
+                nombre: "Ternero Macho",
+                precio: 0,
+              },
+              {
+                nombre: "Ternero Hembra",
+                precio: 0,
+              },
+              {
+                nombre: "Buey",
+                precio: 0,
+              },
+            ],
+          };
+
+          const { user } = useAuth();
+          const establesimientoId = user.establesimiento.id;
+          const userId = user.id;
+          await clasificacionCtrl.postClasificacion(
+            clasificacionData,
+            establesimientoId,
+            userId
+          );
+        } catch (error) {
+          console.error(error);
+        }
+
+        //recargar();
       }
     },
   });
