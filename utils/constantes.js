@@ -25,6 +25,7 @@ export const ENV = {
     NACIMIENTO: "nacimientos",
     ESTABLESIMIENTO: "establesimientos",
     ENTRADA: "entradas",
+    SALIDA: "salidas",
   },
   TOKEN: "Token_PuraRazapp",
   CART: "cart",

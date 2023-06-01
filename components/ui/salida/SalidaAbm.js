@@ -8,23 +8,22 @@ import {
   Button,
   MenuItem,
 } from "@mui/material";
-import { initialValues, validationSchema } from "./EntradaAbm.form";
+import { initialValues, validationSchema } from "./SalidaAbm.form";
 import { useFormik } from "formik";
-import { ApiEntrada, Clasificacion, ApiMotivoEntrada } from "../../../api";
+import { ApiSalida, Clasificacion, ApiMotivoSalida } from "../../../api";
 import { Loading } from "../Loading";
 import { useAuth } from "@/hooks";
 
-const ApiEntradaCtrl = new ApiEntrada();
-const ApiMotivoEntradaCtrl = new ApiMotivoEntrada();
+const ApiSalidaCtrl = new ApiSalida();
+const ApiMotivoSalidaCtrl = new ApiMotivoSalida();
 const clasificacionCtrl = new Clasificacion();
 
-export const EntradaAbm = (props) => {
+export const SalidaAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
   const { user } = useAuth();
   const establesimientoId = user.establesimiento.id;
-  const [tipoRaza, setTipoRaza] = useState([]);
   const [clasificacion, setClasificacion] = useState([]);
-  const [motivoEntrada, setMotivoEntrada] = useState([]);
+  const [motivoSalida, setMotivoSalida] = useState([]);
 
   const formik = useFormik({
     initialValues: initialValues(dato),
@@ -38,13 +37,13 @@ export const EntradaAbm = (props) => {
               fecha: formValue.fecha,
               factura: formValue.factura,
               clasificacion: formValue.clasificacion,
-              motivo_entrada: formValue.motivo_entrada,
+              motivo_salida: formValue.motivo_salida,
               cantidad: formValue.cantidad,
               establesimiento: establesimientoId,
               user_upd: user.username,
             },
           };
-          await ApiEntradaCtrl.postData(body);
+          await ApiSalidaCtrl.postData(body);
           formik.handleReset();
           setReload(true);
           setOpen(false);
@@ -55,7 +54,7 @@ export const EntradaAbm = (props) => {
 
       if (mode === "DLT") {
         try {
-          await ApiEntradaCtrl.delete(codId);
+          await ApiSalidaCtrl.delete(codId);
           formik.handleReset();
           setReload(true);
           setOpen(false);
@@ -70,14 +69,14 @@ export const EntradaAbm = (props) => {
               fecha: formValue.fecha,
               factura: formValue.factura,
               clasificacion: formValue.clasificacion,
-              motivo_entrada: formValue.motivo_entrada,
+              motivo_salida: formValue.motivo_salida,
               cantidad: formValue.cantidad,
               establesimiento: establesimientoId,
               user_upd: user.username,
             },
           };
 
-          await ApiEntradaCtrl.update(body, codId);
+          await ApiSalidaCtrl.update(body, codId);
           setReload(true);
           setOpen(false);
         } catch (error) {
@@ -99,16 +98,16 @@ export const EntradaAbm = (props) => {
 
   useEffect(() => {
     (async () => {
-      const response = await ApiMotivoEntradaCtrl.getAll(establesimientoId);
+      const response = await ApiMotivoSalidaCtrl.getAll(establesimientoId);
       const result = await response.data;
-      setMotivoEntrada(result);
+      setMotivoSalida(result);
     })();
   }, []);
 
   if (!clasificacion) {
     return <Loading />;
   }
-  if (!motivoEntrada) {
+  if (!motivoSalida) {
     return <Loading />;
   }
 
@@ -185,17 +184,17 @@ export const EntradaAbm = (props) => {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              name="motivo_entrada"
+              name="motivo_salida"
               required
               fullWidth
-              label="Motivo Entrada"
+              label="Motivo Salida"
               select
-              value={formik.values.motivo_entrada}
+              value={formik.values.motivo_salida}
               onChange={formik.handleChange}
-              error={formik.errors.motivo_entrada}
+              error={formik.errors.motivo_salida}
               disabled={mode === "DLT" ? true : false}
             >
-              {motivoEntrada.map((dato) => {
+              {motivoSalida.map((dato) => {
                 return (
                   <MenuItem key={dato.id} value={dato.id}>
                     {dato.attributes.nombre}

@@ -80,6 +80,9 @@ export const ItemMenu = () => {
       return;
     }
     switch (menu) {
+      case "Salida":
+        router.push("/partediaria/salida");
+        break;
       case "Entrada":
         router.push("/partediaria/entrada");
         break;
