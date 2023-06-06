@@ -24,6 +24,7 @@ export const SalidaAbm = (props) => {
   const establesimientoId = user.establesimiento.id;
   const [clasificacion, setClasificacion] = useState([]);
   const [motivoSalida, setMotivoSalida] = useState([]);
+  const [cantidadResta, setCantidadResta] = useState(0);
 
   const formik = useFormik({
     initialValues: initialValues(dato),
@@ -47,6 +48,18 @@ export const SalidaAbm = (props) => {
           formik.handleReset();
           setReload(true);
           setOpen(false);
+        } catch (error) {
+          console.error(error);
+        }
+        try {
+          console.log(formValue.clasificacion);
+          let body = {
+            data: {
+              stock: parseInt(cantidadResta) - parseInt(formValue.cantidad),
+            },
+          };
+          console.log(body);
+          await clasificacionCtrl.update(body, formValue.clasificacion);
         } catch (error) {
           console.error(error);
         }
@@ -111,6 +124,10 @@ export const SalidaAbm = (props) => {
     return <Loading />;
   }
 
+  const onMenuItemClick = (stock) => {
+    setCantidadResta(stock);
+  };
+
   return (
     <>
       <Typography variant="h6" component="h2">
@@ -173,7 +190,11 @@ export const SalidaAbm = (props) => {
             >
               {clasificacion.map((dato) => {
                 return (
-                  <MenuItem key={dato.id} value={dato.id}>
+                  <MenuItem
+                    key={dato.id}
+                    value={dato.id}
+                    onClick={() => onMenuItemClick(dato.attributes.stock)}
+                  >
                     {dato.attributes.nombre}
                   </MenuItem>
                 );
@@ -204,7 +225,7 @@ export const SalidaAbm = (props) => {
             </TextField>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             <TextField
               variant="outlined"
               name="cantidad"
@@ -215,6 +236,24 @@ export const SalidaAbm = (props) => {
               onChange={formik.handleChange}
               error={formik.errors.cantidad}
               disabled={mode === "DLT" ? true : false}
+              helperText={
+                formik.errors.cantidad
+                  ? "La Cantidad no puede ser negativa."
+                  : null
+              }
+            />
+          </Grid>
+
+          <Grid item xs={4}>
+            <TextField
+              variant="outlined"
+              name="Stock"
+              fullWidth
+              label="Stock Actual"
+              value={cantidadResta}
+              disabled
+              error={formik.errors.stock}
+              helperText={cantidadResta < 0 ? "1" : null}
             />
           </Grid>
 

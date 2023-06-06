@@ -14,7 +14,6 @@ export function initialValues(dato) {
 
 export function validationSchema() {
   return Yup.object({
-    //nombre: Yup.string().required(true),
     fecha: Yup.date().required(true),
     clasificacion: Yup.string().required(true),
     causa_mortandad: Yup.string().required(true),

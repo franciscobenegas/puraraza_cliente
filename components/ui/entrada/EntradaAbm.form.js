@@ -16,6 +16,6 @@ export function validationSchema() {
     fecha: Yup.date().required(true),
     clasificacion: Yup.string().required(true),
     motivo_entrada: Yup.string().required(true),
-    cantidad: Yup.string().required(true),
+    cantidad: Yup.number().required(true),
   });
 }

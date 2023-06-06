@@ -27,6 +27,7 @@ export const MortandadAbm = (props) => {
   const [causaMortandad, setCausaMortandad] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  const [cantidadResta, setCantidadResta] = useState(0);
 
   const formik = useFormik({
     initialValues: initialValues(dato),
@@ -48,6 +49,20 @@ export const MortandadAbm = (props) => {
             },
           };
           await ApiMortandadCtrl.postData(body);
+
+          try {
+            console.log(formValue.clasificacion);
+            let body = {
+              data: {
+                stock: parseInt(cantidadResta) - 1,
+              },
+            };
+            console.log(body);
+            await clasificacionCtrl.update(body, formValue.clasificacion);
+          } catch (error) {
+            console.error(error);
+          }
+
           formik.handleReset();
           setReload(true);
           setOpen(false);
@@ -124,6 +139,10 @@ export const MortandadAbm = (props) => {
   if (!causaMortandad) {
     return <Loading />;
   }
+
+  const onMenuItemClick = (stock) => {
+    setCantidadResta(stock);
+  };
 
   return (
     <>
@@ -224,12 +243,16 @@ export const MortandadAbm = (props) => {
               select
               value={formik.values.clasificacion}
               onChange={formik.handleChange}
-              error={formik.errors.classificacion}
+              error={formik.errors.clasificacion}
               disabled={mode === "DLT" ? true : false}
             >
               {classi.map((dato) => {
                 return (
-                  <MenuItem key={dato.id} value={dato.id}>
+                  <MenuItem
+                    key={dato.id}
+                    value={dato.id}
+                    onClick={() => onMenuItemClick(dato.attributes.stock)}
+                  >
                     {dato.attributes.nombre}
                   </MenuItem>
                 );

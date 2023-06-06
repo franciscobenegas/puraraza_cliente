@@ -22,7 +22,7 @@ export const EntradaAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
   const { user } = useAuth();
   const establesimientoId = user.establesimiento.id;
-  const [tipoRaza, setTipoRaza] = useState([]);
+  const [cantidadAdd, setCantidadAdd] = useState(0);
   const [clasificacion, setClasificacion] = useState([]);
   const [motivoEntrada, setMotivoEntrada] = useState([]);
 
@@ -44,10 +44,24 @@ export const EntradaAbm = (props) => {
               user_upd: user.username,
             },
           };
+
           await ApiEntradaCtrl.postData(body);
           formik.handleReset();
           setReload(true);
           setOpen(false);
+        } catch (error) {
+          console.error(error);
+        }
+
+        try {
+          console.log(formValue.clasificacion);
+          let body = {
+            data: {
+              stock: parseInt(cantidadAdd) + parseInt(formValue.cantidad),
+            },
+          };
+          console.log(body);
+          await clasificacionCtrl.update(body, formValue.clasificacion);
         } catch (error) {
           console.error(error);
         }
@@ -94,6 +108,7 @@ export const EntradaAbm = (props) => {
       );
       const result = await response.data;
       setClasificacion(result);
+      console.log(clasificacion);
     })();
   }, []);
 
@@ -111,6 +126,10 @@ export const EntradaAbm = (props) => {
   if (!motivoEntrada) {
     return <Loading />;
   }
+
+  const onMenuItemClick = (stock) => {
+    setCantidadAdd(stock);
+  };
 
   return (
     <>
@@ -174,7 +193,11 @@ export const EntradaAbm = (props) => {
             >
               {clasificacion.map((dato) => {
                 return (
-                  <MenuItem key={dato.id} value={dato.id}>
+                  <MenuItem
+                    key={dato.id}
+                    value={dato.id}
+                    onClick={() => onMenuItemClick(dato.attributes.stock)}
+                  >
                     {dato.attributes.nombre}
                   </MenuItem>
                 );
@@ -205,7 +228,7 @@ export const EntradaAbm = (props) => {
             </TextField>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             <TextField
               variant="outlined"
               name="cantidad"
@@ -216,6 +239,17 @@ export const EntradaAbm = (props) => {
               onChange={formik.handleChange}
               error={formik.errors.cantidad}
               disabled={mode === "DLT" ? true : false}
+            />
+          </Grid>
+
+          <Grid item xs={4}>
+            <TextField
+              variant="outlined"
+              name="Stock"
+              fullWidth
+              label="Stock Actual"
+              value={cantidadAdd}
+              disabled
             />
           </Grid>
 

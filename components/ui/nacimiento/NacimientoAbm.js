@@ -178,7 +178,7 @@ export const NacimientoAbm = (props) => {
               label="Tipo de Parto"
               value={formik.values.tipo_Parto}
               onChange={formik.handleChange}
-              error={formik.errors.tipo_tipo_Parto}
+              error={formik.errors.tipo_Parto}
               disabled={mode === "DLT" ? true : false}
             >
               <MenuItem key="Normal" value="Normal">

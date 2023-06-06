@@ -12,7 +12,6 @@ import { Bar } from "react-chartjs-2";
 import { Box, Paper } from "@mui/material";
 import { Clasificacion } from "@/api";
 import { useAuth } from "@/hooks";
-//import faker from "faker";
 
 const clasificacionCtrl = new Clasificacion();
 
@@ -38,22 +37,39 @@ export const options = {
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Cantidad por Clasificacion",
-      data: [100, 200, 300, 700, 500, 600, 200],
-      backgroundColor: "skyblue",
-    },
-  ],
-};
-
 export const AppConversionRates = () => {
   const { user } = useAuth();
-  //const establesimientoId = user.establesimiento.id;
+  const [clasificacion, setClasificacion] = useState([]);
+  const establesimientoId = user.establesimiento.id;
+
+  useEffect(() => {
+    (async () => {
+      const response = await clasificacionCtrl.getClasificacion(
+        establesimientoId
+      );
+      const result = await response.data;
+      setClasificacion(result);
+    })();
+  }, []);
+
+  const dato = clasificacion.map((dat) => {
+    return dat.attributes.stock;
+  });
+
+  const labels = clasificacion.map((dat) => {
+    return dat.attributes.nombre;
+  });
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Cantidad",
+        data: dato,
+        backgroundColor: "skyblue",
+      },
+    ],
+  };
 
   return (
     <Paper elevation={3}>
