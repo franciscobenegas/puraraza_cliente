@@ -54,13 +54,12 @@ export const EntradaAbm = (props) => {
         }
 
         try {
-          console.log(formValue.clasificacion);
           let body = {
             data: {
               stock: parseInt(cantidadAdd) + parseInt(formValue.cantidad),
             },
           };
-          console.log(body);
+
           await clasificacionCtrl.update(body, formValue.clasificacion);
         } catch (error) {
           console.error(error);
@@ -108,7 +107,6 @@ export const EntradaAbm = (props) => {
       );
       const result = await response.data;
       setClasificacion(result);
-      console.log(clasificacion);
     })();
   }, []);
 

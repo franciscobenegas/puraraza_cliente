@@ -51,13 +51,11 @@ export const MortandadAbm = (props) => {
           await ApiMortandadCtrl.postData(body);
 
           try {
-            console.log(formValue.clasificacion);
             let body = {
               data: {
                 stock: parseInt(cantidadResta) - 1,
               },
             };
-            console.log(body);
             await clasificacionCtrl.update(body, formValue.clasificacion);
           } catch (error) {
             console.error(error);

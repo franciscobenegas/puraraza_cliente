@@ -17,9 +17,11 @@ export class Auth {
       );
 
       if (response.jwt === "") throw "Error no se pudo dar de alta Usuario.";
+      if (response.error.status === 400) throw response.error.message;
 
       return response;
     } catch (error) {
+      console.erro(error);
       throw error;
     }
   }
@@ -39,11 +41,12 @@ export class Auth {
         response.json()
       );
 
-      //if (response.jwt === "") throw "No se pudo Iniciar Sesion.";
-      //console.log(response.error.message);
+      if (response.jwt === "") throw "No se pudo Iniciar Sesion.";
+
       return response;
     } catch (error) {
       throw error;
+      console.erro(error);
     }
   }
 }

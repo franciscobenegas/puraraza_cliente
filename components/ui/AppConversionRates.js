@@ -40,7 +40,7 @@ export const options = {
 export const AppConversionRates = () => {
   const { user } = useAuth();
   const [clasificacion, setClasificacion] = useState([]);
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user.establesimiento?.id;
 
   useEffect(() => {
     (async () => {

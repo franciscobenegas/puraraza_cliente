@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks";
 import { ResponsiveDrawer } from "@/components/layouts";
 import {
@@ -16,12 +16,20 @@ import {
   validationSchema,
 } from "../../../components/ui/establesimiento/EstablesimientoAbm.form";
 import { useFormik } from "formik";
-import { ApiEstablesimiento } from "@/api/apiEstablesimiento";
+import {
+  ApiEstablesimiento,
+  ApiCausaMort,
+  ApiMotivoEntrada,
+  ApiMotivoSalida,
+} from "@/api";
 import { Clasificacion } from "@/api";
 import { toast, ToastContainer } from "react-toastify";
 
 const ApiEstablesimientoCtrl = new ApiEstablesimiento();
 const clasificacionCtrl = new Clasificacion();
+const causaMortandadCtrl = new ApiCausaMort();
+const motivoEntradaCtrl = new ApiMotivoEntrada();
+const motivoSalidaCtrl = new ApiMotivoSalida();
 
 const notify = () => {
   toast.success("Datos Actualizado exitosamente!!!", {
@@ -45,6 +53,7 @@ const EstablesimientoPage = () => {
   const { user } = useAuth();
   const establesimientoId = user?.establesimiento?.id;
   const userId = user?.id;
+  const userNombre = user?.username;
 
   let body = {
     data: {
@@ -88,74 +97,160 @@ const EstablesimientoPage = () => {
               telefono: formValue.telefono,
             },
           };
-
           await ApiEstablesimientoCtrl.postData(body2);
+          recargar();
 
-          //recargar();
           notify();
         } catch (error) {
           console.error(error);
           notifyError();
         }
-
-        try {
-          let clasificacionData = {
-            data: [
-              {
-                nombre: "Vaca",
-                precio: 0,
-              },
-              {
-                nombre: "Toro",
-                precio: 0,
-              },
-              {
-                nombre: "Vaquilla",
-                precio: 0,
-              },
-              {
-                nombre: "Novillo",
-                precio: 0,
-              },
-              {
-                nombre: "Desmamante Macho",
-                precio: 0,
-              },
-              {
-                nombre: "Desmamante Hembra",
-                precio: 0,
-              },
-              {
-                nombre: "Ternero Macho",
-                precio: 0,
-              },
-              {
-                nombre: "Ternero Hembra",
-                precio: 0,
-              },
-              {
-                nombre: "Buey",
-                precio: 0,
-              },
-            ],
-          };
-
-          const { user } = useAuth();
-          const establesimientoId = user.establesimiento.id;
-          const userId = user.id;
-          await clasificacionCtrl.postClasificacion(
-            clasificacionData,
-            establesimientoId,
-            userId
-          );
-        } catch (error) {
-          console.error(error);
-        }
-
-        //recargar();
       }
     },
   });
+
+  useEffect(() => {
+    (async () => {
+      // TODO: Si no existe Clasificacion lo carga por defecto.
+      if (establesimientoId) {
+        const responseClasificacion = await clasificacionCtrl.getClasificacion(
+          establesimientoId
+        );
+
+        if (responseClasificacion.data.length === 0) {
+          await clasificacionCtrl.postNewAll(
+            "Vaca",
+            establesimientoId,
+            userNombre
+          );
+          await clasificacionCtrl.postNewAll(
+            "Toro",
+            establesimientoId,
+            userNombre
+          );
+          await clasificacionCtrl.postNewAll(
+            "Vaquilla",
+            establesimientoId,
+            userNombre
+          );
+          await clasificacionCtrl.postNewAll(
+            "Novillo",
+            establesimientoId,
+            userNombre
+          );
+          await clasificacionCtrl.postNewAll(
+            "Desmamante Macho",
+            establesimientoId,
+            userNombre
+          );
+          await clasificacionCtrl.postNewAll(
+            "Desmamante Hembra",
+            establesimientoId,
+            userNombre
+          );
+          await clasificacionCtrl.postNewAll(
+            "Ternero Macho",
+            establesimientoId,
+            userNombre
+          );
+          await clasificacionCtrl.postNewAll(
+            "Ternero Hembra",
+            establesimientoId,
+            userNombre
+          );
+          await clasificacionCtrl.postNewAll(
+            "Buey",
+            establesimientoId,
+            userNombre
+          );
+        }
+
+        // TODO: Si no existe Causa de Mortandad lo carga por defecto.
+        const responseCausaMortandad = await causaMortandadCtrl.getCausaMort(
+          establesimientoId
+        );
+
+        if (responseCausaMortandad.data.length === 0) {
+          let body = {
+            data: {
+              nombre: "Desconosido",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await causaMortandadCtrl.postCausaMortandad(body);
+
+          let body1 = {
+            data: {
+              nombre: "Enfermedad",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await causaMortandad.postCausaMortandad(body1);
+
+          let body2 = {
+            data: {
+              nombre: "Picadura de Vibora",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await causaMortandad.postCausaMortandad(body2);
+        }
+
+        // TODO: Si no existe Motivo de Entrada lo carga por defecto.
+        const responseMotivoEntrada = await motivoEntradaCtrl.getAll(
+          establesimientoId
+        );
+
+        if (responseMotivoEntrada.data.length === 0) {
+          let bodyME = {
+            data: {
+              nombre: "Ninguno",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await motivoEntradaCtrl.postData(bodyME);
+
+          let bodyME1 = {
+            data: {
+              nombre: "Compra",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await motivoEntradaCtrl.postData(bodyME1);
+        }
+
+        // TODO: Si no existe Motivo de Salida lo carga por defecto.
+        const responseMotivoSalida = await motivoSalidaCtrl.getAll(
+          establesimientoId
+        );
+
+        if (responseMotivoSalida.data.length === 0) {
+          let bodyMS = {
+            data: {
+              nombre: "Ninguno",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await motivoSalidaCtrl.postData(bodyMS);
+
+          let bodyMS1 = {
+            data: {
+              nombre: "Venta",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await motivoSalidaCtrl.postData(bodyMS1);
+        }
+      }
+    })();
+  }, []);
 
   return (
     <ResponsiveDrawer>

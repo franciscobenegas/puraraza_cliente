@@ -35,7 +35,6 @@ export class Clasificacion {
       const response = await authFetch(url, params).then((response) =>
         response.json()
       );
-
       if (response.jwt === "") throw "Error no se pudo dar de alta Usuario.";
 
       return response;
@@ -73,6 +72,38 @@ export class Clasificacion {
       const result = await response.json();
       if (response.status !== 200) throw response;
       return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async postNewAll(dato, establesimientoId, user_upd) {
+    try {
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CLASIFICACION}`;
+      const data = {
+        data: {
+          nombre: dato,
+          stock: 0,
+          establesimiento: establesimientoId,
+          user_upd: user_upd,
+          precio: 0,
+        },
+      };
+
+      const params = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      const response = await authFetch(url, params).then((response) =>
+        response.json()
+      );
+
+      if (response.jwt === "") throw "Error no se pudo dar de alta Usuario.";
+
+      return response;
     } catch (error) {
       throw error;
     }

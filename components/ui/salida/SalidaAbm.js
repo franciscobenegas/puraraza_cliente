@@ -52,13 +52,11 @@ export const SalidaAbm = (props) => {
           console.error(error);
         }
         try {
-          console.log(formValue.clasificacion);
           let body = {
             data: {
               stock: parseInt(cantidadResta) - parseInt(formValue.cantidad),
             },
           };
-          console.log(body);
           await clasificacionCtrl.update(body, formValue.clasificacion);
         } catch (error) {
           console.error(error);

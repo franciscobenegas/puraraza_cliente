@@ -12,6 +12,7 @@ import { Paper } from "@mui/material";
 import PersonPinOutlinedIcon from "@mui/icons-material/PersonPinOutlined";
 import NextLink from "next/link";
 import { useFormik } from "formik";
+import { toast, ToastContainer } from "react-toastify";
 import {
   initialValues,
   validationSchema,
@@ -49,6 +50,14 @@ const PaginaRegistro = () => {
     router.push("/");
     return null;
   }
+
+  const notify = (error) => {
+    toast.error(error, {
+      position: toast.POSITION.TOP_RIGHT,
+      theme: "colored",
+    });
+  };
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
@@ -59,12 +68,14 @@ const PaginaRegistro = () => {
         router.push("/login/inicio");
       } catch (error) {
         console.error(error);
+        notify(error);
       }
     },
   });
 
   return (
     <ThemeProvider theme={theme}>
+      <ToastContainer autoClose={8000} />
       <Container component="main" maxWidth="sm">
         <Paper
           elevation={6}

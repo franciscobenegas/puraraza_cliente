@@ -1,18 +1,33 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { ResponsiveDrawer } from "@/components/layouts";
 import { Grid } from "@mui/material";
 import { AppWidgetSummary, AppConversionRates, AppPie } from "../components/ui";
 import { useAuth } from "/hooks";
 import { useRouter } from "next/router";
+import { ApiMortandad } from "@/api";
+
+const ApiMortandadCtrl = new ApiMortandad();
 
 export default function Home() {
   const { user } = useAuth();
   const router = useRouter();
+  const [cantidadTotalMortandad, setCantidadTotalMortandad] = useState(0);
   const establesimientoId = user?.establesimiento?.id;
 
   if (!establesimientoId) {
     router.push("/configuracion/establesimiento");
   }
+
+  useEffect(() => {
+    (async () => {
+      const responseMortandad = await ApiMortandadCtrl.getAll(
+        establesimientoId
+      );
+      const result = await responseMortandad.data;
+      setCantidadTotalMortandad(result.length);
+    })();
+  }, []);
 
   return (
     <>
@@ -28,28 +43,28 @@ export default function Home() {
             <Grid item xs={12} sm={6} md={3}>
               <AppWidgetSummary
                 title="Mortandad General"
-                total={150}
+                total={cantidadTotalMortandad}
                 icon={"ant-design:android-filled"}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <AppWidgetSummary
                 title="Mortandad Ternero"
-                total={"50"}
+                total={"0"}
                 color="info"
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <AppWidgetSummary
                 title="Mortandad Jóvenes"
-                total={"20"}
+                total={"0"}
                 color="warning"
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <AppWidgetSummary
                 title="Mortandad Adultos"
-                total={"300"}
+                total={"0"}
                 color="error"
               />
             </Grid>
