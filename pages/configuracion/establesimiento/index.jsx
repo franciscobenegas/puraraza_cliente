@@ -51,6 +51,7 @@ const recargar = () => {
 
 const EstablesimientoPage = () => {
   const { user } = useAuth();
+  console.log(user);
   const establesimientoId = user?.establesimiento?.id;
   const userId = user?.id;
   const userNombre = user?.username;
