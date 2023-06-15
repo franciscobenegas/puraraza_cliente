@@ -6,10 +6,9 @@ export class ApiMortandad {
       const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=id`;
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.MORTANDAD}?${filters}`;
       const response = await authFetch(url);
+      console.log(response);
       const result = await response.json();
-
       if (response.status !== 200) throw result;
-
       return result;
     } catch (error) {
       throw error;

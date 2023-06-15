@@ -11,6 +11,7 @@ const ApiMortandadCtrl = new ApiMortandad();
 
 export default function Home() {
   const { user } = useAuth();
+  console.log(user);
   const router = useRouter();
   const [cantidadTotalMortandad, setCantidadTotalMortandad] = useState(0);
   const establesimientoId = user?.establesimiento?.id;
@@ -21,11 +22,13 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      const responseMortandad = await ApiMortandadCtrl.getAll(
-        establesimientoId
-      );
-      const result = await responseMortandad.data;
-      setCantidadTotalMortandad(result.length);
+      if (establesimientoId) {
+        const responseMortandad = await ApiMortandadCtrl.getAll(
+          establesimientoId
+        );
+        const result = await responseMortandad.data;
+        setCantidadTotalMortandad(result.length);
+      }
     })();
   }, []);
 

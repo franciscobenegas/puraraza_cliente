@@ -51,7 +51,6 @@ const recargar = () => {
 
 const EstablesimientoPage = () => {
   const { user } = useAuth();
-  console.log(user);
   const establesimientoId = user?.establesimiento?.id;
   const userId = user?.id;
   const userNombre = user?.username;
@@ -188,7 +187,7 @@ const EstablesimientoPage = () => {
               user_upd: userNombre,
             },
           };
-          await causaMortandad.postCausaMortandad(body1);
+          await causaMortandadCtrl.postCausaMortandad(body1);
 
           let body2 = {
             data: {
@@ -197,7 +196,7 @@ const EstablesimientoPage = () => {
               user_upd: userNombre,
             },
           };
-          await causaMortandad.postCausaMortandad(body2);
+          await causaMortandadCtrl.postCausaMortandad(body2);
         }
 
         // TODO: Si no existe Motivo de Entrada lo carga por defecto.
