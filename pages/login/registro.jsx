@@ -64,11 +64,19 @@ const PaginaRegistro = () => {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        await authCtrl.register(formValue);
-        router.push("/login/inicio");
+        const result = await authCtrl.register(formValue);
+        console.log(result);
+        if (result.error.status === 200) {
+          router.push("/login/inicio");
+        } else {
+          console.log(result.error.message);
+          notify(result.error.message);
+        }
       } catch (error) {
+        //console.log("error");
+        //notify(result.error.message);
+        //console.log(result);
         console.error(error);
-        notify(error);
       }
     },
   });
