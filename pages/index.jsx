@@ -11,7 +11,6 @@ const ApiMortandadCtrl = new ApiMortandad();
 
 export default function Home() {
   const { user } = useAuth();
-  console.log(user);
   const router = useRouter();
   const [cantidadTotalMortandad, setCantidadTotalMortandad] = useState(0);
   const establesimientoId = user?.establesimiento?.id;

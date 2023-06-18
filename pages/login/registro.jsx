@@ -65,7 +65,6 @@ const PaginaRegistro = () => {
     onSubmit: async (formValue) => {
       try {
         const result = await authCtrl.register(formValue);
-        console.log(formValue);
         if (result.error.status === 200) {
           router.push("/login/inicio");
         } else {
