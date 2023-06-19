@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Avatar,
   IconButton,
@@ -20,17 +20,22 @@ import { useFormik } from "formik";
 import {
   initialValues,
   validationSchema,
-} from "../../components/ui/login/inicio.form.js";
-import { Auth } from "../../api";
+} from "../../components/ui/login/recupera.form.js";
+
+import { Auth } from "../../api/index.js";
 import { useRouter } from "next/router.js";
 import { toast, ToastContainer } from "react-toastify";
-import { useAuth } from "../../hooks";
+import { useAuth } from "../../hooks/index.js";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { blue } from "@mui/material/colors";
+import emailjs from "@emailjs/browser";
 
 const authCtrl = new Auth();
+const USER_ID = "qdRRvKTKMmdNp-xiY"; //process.env.REACT_APP_EMAILJS_USERID;
+const TEMPLATE_ID = "template_omvh686"; //process.env.REACT_APP_EMAILJS_TEMPLATEID;
+const SERVICE_ID = "service_w7kwd3h"; //process.env.REACT_APP_EMAILJS_SERVICEID;
 
 function Copyright(props) {
   return (
@@ -52,19 +57,36 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-const PaginaInicio = () => {
-  const { login, user } = useAuth();
+const PaginaRecuperaContrasena = () => {
   const router = useRouter();
 
-  if (user) {
-    router.push("/");
-    return null;
-  }
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    //e.preventDefault();
+    console.log("formValue =" + e);
+
+    emailjs
+      .sendForm(SERVICE_ID, TEMPLATE_ID, e.target, USER_ID)
+      .then((res) => console.log("SUCCESS!", res.status, res.text))
+      .catch((error) => console.log("FAILED...", error));
+  };
+
   const notify = () => {
-    toast.error("Error Inicio de Sesion, verifique Usuario o Contraseña !", {
+    toast.info("Se ha enviado una Correo para reestablecer su contraseña !", {
       position: toast.POSITION.TOP_RIGHT,
       theme: "colored",
     });
+  };
+
+  const notifyErr = () => {
+    toast.error(
+      "Algo salio mal, no se pudo enviar el correo, consulte con el Administrador!",
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        theme: "colored",
+      }
+    );
   };
 
   const formik = useFormik({
@@ -73,20 +95,16 @@ const PaginaInicio = () => {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        const response = await authCtrl.login(formValue);
-        if (response.jwt) {
-          login(response.jwt);
-          router.push("/");
-        } else {
+        emailjs.send(SERVICE_ID, TEMPLATE_ID, formValue, USER_ID).then(() => {
+          console.log("Email Enviado con Exito");
           notify();
-        }
-      } catch (error) {
-        console.error(error);
+        });
+      } catch {
+        console.error("Email no enviado");
+        notifyErr();
       }
     },
   });
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   return (
     <ThemeProvider theme={theme}>
@@ -115,7 +133,7 @@ const PaginaInicio = () => {
             </Avatar>
 
             <Typography component="h1" variant="h5">
-              Iniciar Sesion
+              Recuperar Contraseña
             </Typography>
 
             <Box
@@ -129,81 +147,29 @@ const PaginaInicio = () => {
                 margin="normal"
                 required
                 fullWidth
-                //id="email"
-                label="Usuario o Contraseña"
-                name="identifier"
+                label="Correo Electronico"
+                name="subject"
                 autoComplete="email"
                 autoFocus
-                value={formik.values.identifier}
+                type="email"
+                value={formik.values.subject}
                 onChange={formik.handleChange}
-                error={formik.errors.identifier}
-              />
-              <TextField
-                variant="filled"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Contraseña"
-                //type="password"
-                type={showPassword ? "text" : "password"}
-                id="password"
-                autoComplete="current-password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                error={formik.errors.password}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        // onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? (
-                          <VisibilityOffOutlinedIcon
-                            sx={{ color: blue[800], fontSize: 35 }}
-                          />
-                        ) : (
-                          <VisibilityOutlinedIcon
-                            sx={{ color: blue[800], fontSize: 35 }}
-                          />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
+                error={formik.errors.subject}
               />
 
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Recordar inicio sesion"
-              />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2, borderRadius: 10 }}
               >
-                Iniciar
+                Recuperar Cotraseña
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <NextLink
-                    href="/login/resuperarcontra"
-                    passHref
-                    legacyBehavior
-                  >
-                    <Link underline="none" variant="body2">
-                      Has olvidado tu contraseña?
-                    </Link>
-                  </NextLink>
-                </Grid>
+              <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <NextLink href="/login/registro" passHref legacyBehavior>
+                  <NextLink href="/login/inicio" passHref legacyBehavior>
                     <Link underline="none" variant="body2">
-                      {"¿No tienes una cuenta?"}
+                      Volver al Inicio
                     </Link>
                   </NextLink>
                 </Grid>
@@ -217,4 +183,4 @@ const PaginaInicio = () => {
   );
 };
 
-export default PaginaInicio;
+export default PaginaRecuperaContrasena;
