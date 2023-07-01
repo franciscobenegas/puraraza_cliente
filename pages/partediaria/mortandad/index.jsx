@@ -120,6 +120,7 @@ const MortandadHome = () => {
   }
 
   const row = map(data, (rowsr) => {
+    //console.log(data);
     return {
       id: rowsr.id,
       establesimiento: rowsr.attributes.establesimiento.data.attributes.nombre,

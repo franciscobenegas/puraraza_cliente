@@ -58,19 +58,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 const PaginaRecuperaContrasena = () => {
-  const router = useRouter();
-
-  const form = useRef();
-
-  const sendEmail = (e) => {
-    //e.preventDefault();
-    console.log("formValue =" + e);
-
-    emailjs
-      .sendForm(SERVICE_ID, TEMPLATE_ID, e.target, USER_ID)
-      .then((res) => console.log("SUCCESS!", res.status, res.text))
-      .catch((error) => console.log("FAILED...", error));
-  };
+  const [correo, setCorreo] = useState("");
 
   const notify = () => {
     toast.info("Se ha enviado una Correo para reestablecer su contraseña !", {
@@ -94,6 +82,7 @@ const PaginaRecuperaContrasena = () => {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
+      console.log(formValue);
       try {
         emailjs.send(SERVICE_ID, TEMPLATE_ID, formValue, USER_ID).then(() => {
           console.log("Email Enviado con Exito");
@@ -148,15 +137,25 @@ const PaginaRecuperaContrasena = () => {
                 required
                 fullWidth
                 label="Correo Electronico"
-                name="subject"
+                name="to_name"
                 autoComplete="email"
                 autoFocus
                 type="email"
-                value={formik.values.subject}
+                value={formik.values.to_name}
+                onChange={formik.handleChange}
+                error={formik.errors.to_name}
+              />
+              <TextField
+                variant="filled"
+                margin="normal"
+                fullWidth
+                label="Subject"
+                name="subject"
+                type="text"
+                value={btoa(formik.values.subject)}
                 onChange={formik.handleChange}
                 error={formik.errors.subject}
               />
-
               <Button
                 type="submit"
                 fullWidth

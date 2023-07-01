@@ -29,22 +29,74 @@ import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "@/hooks";
 
 const data = [
-  { icon: <BlockOutlinedIcon />, label: "Mortandad" },
-  { icon: <AddCircleOutlineOutlinedIcon />, label: "Nacimiento" },
-  { icon: <ArrowBackOutlinedIcon />, label: "Entrada" },
-  { icon: <ArrowForwardOutlinedIcon />, label: "Salida" },
-  { icon: <MonitorWeightOutlinedIcon />, label: "Pesaje" },
+  {
+    icon: <BlockOutlinedIcon />,
+    label: "Mortandad",
+    path: "/partediaria/mortandad",
+  },
+  {
+    icon: <AddCircleOutlineOutlinedIcon />,
+    label: "Nacimiento",
+    path: "/partediaria/nacimiento",
+  },
+  {
+    icon: <ArrowBackOutlinedIcon />,
+    label: "Entrada",
+    path: "/partediaria/entrada",
+  },
+  {
+    icon: <ArrowForwardOutlinedIcon />,
+    label: "Salida",
+    path: "/partediaria/salida",
+  },
+  {
+    icon: <MonitorWeightOutlinedIcon />,
+    label: "Pesaje",
+    path: "/partediaria/pesaje",
+  },
 ];
 
 const data2 = [
-  { icon: <AddHomeWorkOutlinedIcon />, label: "Clasificacion" },
-  { icon: <FactCheckOutlinedIcon />, label: "Tipo Razas" },
-  { icon: <BlockOutlinedIcon />, label: "Causa Mortandad" },
-  { icon: <MonitorWeightOutlinedIcon />, label: "Motivo Pesaje" },
-  { icon: <ArrowBackOutlinedIcon />, label: "Motivo Entrada" },
-  { icon: <ArrowForwardOutlinedIcon />, label: "Motivo Salida" },
-  { icon: <AddHomeOutlinedIcon />, label: "Establesimiento" },
-  { icon: <PersonAddOutlinedIcon />, label: "Usuarios" },
+  {
+    icon: <AddHomeWorkOutlinedIcon />,
+    label: "Clasificacion",
+    path: "/configuracion/clasificacion",
+  },
+  {
+    icon: <FactCheckOutlinedIcon />,
+    label: "Tipo Razas",
+    path: "/configuracion/tiporaza",
+  },
+  {
+    icon: <BlockOutlinedIcon />,
+    label: "Causa Mortandad",
+    path: "/configuracion/causamortandad",
+  },
+  {
+    icon: <MonitorWeightOutlinedIcon />,
+    label: "Motivo Pesaje",
+    path: "/configuracion/motivopesaje",
+  },
+  {
+    icon: <ArrowBackOutlinedIcon />,
+    label: "Motivo Entrada",
+    path: "/configuracion/motivoentrada",
+  },
+  {
+    icon: <ArrowForwardOutlinedIcon />,
+    label: "Motivo Salida",
+    path: "/configuracion/motivosalida",
+  },
+  {
+    icon: <AddHomeOutlinedIcon />,
+    label: "Establesimiento",
+    path: "/configuracion/establesimiento",
+  },
+  {
+    icon: <PersonAddOutlinedIcon />,
+    label: "Usuarios",
+    path: "/configuracion/usuarios",
+  },
 ];
 
 const FireNav = styled(List)({
@@ -74,7 +126,10 @@ export const ItemMenu = () => {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const router = useRouter();
+  const rutaActual = router.asPath;
+  console.log(rutaActual);
   const irMenu = (menu) => {
+    console.log("menu = " + menu);
     if (!establesimientoId) {
       notifyError();
       return;
@@ -257,7 +312,10 @@ export const ItemMenu = () => {
                       sx={{
                         py: 0,
                         minHeight: 32,
-                        color: "rgba(255,255,255,.8)",
+                        color:
+                          rutaActual === item.path
+                            ? "#1976D2"
+                            : "rgba(255,255,255,.8)",
                       }}
                     >
                       <ListItemIcon sx={{ color: "inherit" }}>
@@ -318,7 +376,10 @@ export const ItemMenu = () => {
                       sx={{
                         py: 0,
                         minHeight: 32,
-                        color: "rgba(255,255,255,.8)",
+                        color:
+                          rutaActual === item.path
+                            ? "#1976D2"
+                            : "rgba(255,255,255,.8)",
                       }}
                     >
                       <ListItemIcon sx={{ color: "inherit" }}>

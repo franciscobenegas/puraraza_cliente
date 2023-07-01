@@ -2,8 +2,9 @@ import * as Yup from "yup";
 
 export function initialValues(dato) {
   const { data } = dato;
+  const fecha = new Date().toISOString().slice(0, 10);
   return {
-    fecha: data?.fecha || "",
+    fecha: data?.fecha || fecha,
     NroCaravana: data?.NroCaravana || "",
     NroCaravanaMadre: data?.NroCaravanaMadre || "",
     NroCaravanaPadre: data?.NroCaravanaPadre || "",
