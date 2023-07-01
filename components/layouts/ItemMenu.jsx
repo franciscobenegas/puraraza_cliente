@@ -127,9 +127,7 @@ export const ItemMenu = () => {
   const [open2, setOpen2] = React.useState(false);
   const router = useRouter();
   const rutaActual = router.asPath;
-  console.log(rutaActual);
   const irMenu = (menu) => {
-    console.log("menu = " + menu);
     if (!establesimientoId) {
       notifyError();
       return;
