@@ -7,32 +7,32 @@ import {
   TextField,
   Button,
   MenuItem,
-  Input,
 } from "@mui/material";
-import { initialValues, validationSchema } from "./MortandadAbm.form";
+import { initialValues, validationSchema } from "./PesajeAbm.form";
 import { useFormik } from "formik";
 import {
-  ApiMortandad,
+  ApiSalida,
   Clasificacion,
-  ApiCausaMort,
-  ApiMovimientos,
+  ApiMotivoSalida,
+  ApiMotivoPesaje,
+  ApiPesaje,
 } from "../../../api";
 import { Loading } from "../Loading";
 import { useAuth } from "@/hooks";
 
-const ApiMortandadCtrl = new ApiMortandad();
+const ApiSalidaCtrl = new ApiSalida();
+const ApiMotivoSalidaCtrl = new ApiMotivoSalida();
 const clasificacionCtrl = new Clasificacion();
-const causaMortandadCtrl = new ApiCausaMort();
-const movimientosCtrl = new ApiMovimientos();
+const ApiPesajeCtrl = new ApiPesaje();
+const ApiMotivoPesajeCtrl = new ApiMotivoPesaje();
 
-export const MortandadAbm = (props) => {
+export const PesajeAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
   const { user } = useAuth();
   const establesimientoId = user.establesimiento.id;
-  const [classi, setclassi] = useState([]);
-  const [causaMortandad, setCausaMortandad] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [clasificacion, setClasificacion] = useState([]);
+  const [motivoSalida, setMotivoSalida] = useState([]);
+  const [motivoPesaje, setMotivoPesaje] = useState([]);
   const [cantidadResta, setCantidadResta] = useState(0);
 
   const formik = useFormik({
@@ -45,45 +45,15 @@ export const MortandadAbm = (props) => {
           let body = {
             data: {
               fecha: formValue.fecha,
-              NroCaravana: formValue.NroCaravana,
-              NroCaravanaMadre: formValue.NroCaravanaMadre,
-              NroCaravanaPadre: formValue.NroCaravanaPadre,
+              caravana: formValue.caravana,
               clasificacion: formValue.clasificacion,
-              causa_mortandad: formValue.causa_mortandad,
+              motivo_pesaje: formValue.motivo_pesaje,
+              peso: formValue.peso,
               establesimiento: establesimientoId,
               user_upd: user.username,
             },
           };
-          await ApiMortandadCtrl.postData(body);
-
-          try {
-            let body = {
-              data: {
-                stock: parseInt(cantidadResta) - 1,
-              },
-            };
-            await clasificacionCtrl.update(body, formValue.clasificacion);
-          } catch (error) {
-            console.error(error);
-          }
-
-          try {
-            let body = {
-              data: {
-                fecha: new Date().toISOString().slice(0, 10),
-                tipoMovimiento: "Mortandad",
-                cantidad: 1,
-                user_upd: user.username,
-                stockActual: parseInt(cantidadResta),
-                establesimiento: establesimientoId,
-                clasificacion: formValue.clasificacion,
-              },
-            };
-            await movimientosCtrl.postData(body);
-          } catch (error) {
-            console.error(error);
-          }
-
+          await ApiPesajeCtrl.postData(body);
           formik.handleReset();
           setReload(true);
           setOpen(false);
@@ -94,7 +64,7 @@ export const MortandadAbm = (props) => {
 
       if (mode === "DLT") {
         try {
-          await ApiMortandadCtrl.delete(codId);
+          await ApiPesajeCtrl.delete(codId);
           formik.handleReset();
           setReload(true);
           setOpen(false);
@@ -107,16 +77,16 @@ export const MortandadAbm = (props) => {
           let body = {
             data: {
               fecha: formValue.fecha,
-              NroCaravana: formValue.NroCaravana,
-              NroCaravanaMadre: formValue.NroCaravanaMadre,
-              NroCaravanaPadre: formValue.NroCaravanaPadre,
+              caravana: formValue.caravana,
               clasificacion: formValue.clasificacion,
-              causa_mortandad: formValue.causa_mortandad,
+              motivo_pesaje: formValue.motivo_pesaje,
+              peso: formValue.peso,
+              establesimiento: establesimientoId,
               user_upd: user.username,
             },
           };
 
-          await ApiMortandadCtrl.update(body, codId);
+          await ApiPesajeCtrl.update(body, codId);
           setReload(true);
           setOpen(false);
         } catch (error) {
@@ -132,38 +102,24 @@ export const MortandadAbm = (props) => {
         establesimientoId
       );
       const result = await response.data;
-      setclassi(result);
+      setClasificacion(result);
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      const response = await causaMortandadCtrl.getCausaMort(establesimientoId);
+      const response = await ApiMotivoPesajeCtrl.getAll(establesimientoId);
       const result = await response.data;
-      setCausaMortandad(result);
-      setReload(false);
+      setMotivoPesaje(result);
     })();
   }, []);
 
-  useEffect(() => {
-    if (selectedImage) {
-      console.log(selectedImage.name);
-      setImageUrl(URL.createObjectURL(selectedImage));
-      console.log(imageUrl);
-    }
-  }, [selectedImage]);
-
-  if (!classi) {
+  if (!clasificacion) {
     return <Loading />;
   }
-
-  if (!causaMortandad) {
+  if (!motivoPesaje) {
     return <Loading />;
   }
-
-  const onMenuItemClick = (stock) => {
-    setCantidadResta(stock);
-  };
 
   return (
     <>
@@ -188,7 +144,7 @@ export const MortandadAbm = (props) => {
               fullWidth
               label="Fecha"
               type="date"
-              autoFocus={mode === "DLT" ? false : true}
+              autoFocus
               value={formik.values.fecha}
               onChange={formik.handleChange}
               error={formik.errors.fecha}
@@ -198,59 +154,16 @@ export const MortandadAbm = (props) => {
               }}
             />
           </Grid>
-          <Grid item xs={6}>
-            <TextField
-              variant="outlined"
-              name="NroCaravana"
-              fullWidth
-              label={
-                mode === "ADD"
-                  ? "Nro Caravana"
-                  : mode === "UPD"
-                  ? "Nro Caravana"
-                  : null
-              }
-              value={formik.values.NroCaravana}
-              onChange={formik.handleChange}
-              error={formik.errors.NroCaravana}
-              disabled={mode === "DLT" ? true : false}
-            />
-          </Grid>
 
           <Grid item xs={6}>
             <TextField
               variant="outlined"
-              name="NroCaravanaMadre"
+              name="caravana"
               fullWidth
-              label={
-                mode === "ADD"
-                  ? "Nro Caravana Madre"
-                  : mode === "UPD"
-                  ? "Nro Caravana Madre"
-                  : null
-              }
-              value={formik.values.NroCaravanaMadre}
+              label="#Caravana"
+              value={formik.values.caravana}
               onChange={formik.handleChange}
-              error={formik.errors.NroCaravanaMadre}
-              disabled={mode === "DLT" ? true : false}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              variant="outlined"
-              name="NroCaravanaPadre"
-              fullWidth
-              label={
-                mode === "ADD"
-                  ? "Nro Caravana Padre"
-                  : mode === "UPD"
-                  ? "Nro Caravana Padre"
-                  : null
-              }
-              value={formik.values.NroCaravanaPadre}
-              onChange={formik.handleChange}
-              error={formik.errors.NroCaravanaPadre}
+              error={formik.errors.caravana}
               disabled={mode === "DLT" ? true : false}
             />
           </Grid>
@@ -261,19 +174,16 @@ export const MortandadAbm = (props) => {
               name="clasificacion"
               fullWidth
               label="Clasificaicon"
+              required
               select
               value={formik.values.clasificacion}
               onChange={formik.handleChange}
               error={formik.errors.clasificacion}
               disabled={mode === "DLT" ? true : false}
             >
-              {classi.map((dato) => {
+              {clasificacion.map((dato) => {
                 return (
-                  <MenuItem
-                    key={dato.id}
-                    value={dato.id}
-                    onClick={() => onMenuItemClick(dato.attributes.stock)}
-                  >
+                  <MenuItem key={dato.id} value={dato.id}>
                     {dato.attributes.nombre}
                   </MenuItem>
                 );
@@ -284,19 +194,20 @@ export const MortandadAbm = (props) => {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              name="causa_mortandad"
+              name="motivo_pesaje"
+              required
               fullWidth
-              label="Causa Mortandad"
+              label="Motivo Pesaje"
               select
-              value={formik.values.causa_mortandad}
+              value={formik.values.motivo_pesaje}
               onChange={formik.handleChange}
-              error={formik.errors.causa_mortandad}
+              error={formik.errors.motivo_pesaje}
               disabled={mode === "DLT" ? true : false}
             >
-              {causaMortandad.map((item) => {
+              {motivoPesaje.map((dato) => {
                 return (
-                  <MenuItem key={item.id} value={item.id}>
-                    {item.attributes.nombre}
+                  <MenuItem key={dato.id} value={dato.id}>
+                    {dato.attributes.nombre}
                   </MenuItem>
                 );
               })}
@@ -306,16 +217,19 @@ export const MortandadAbm = (props) => {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              name="image"
+              name="peso"
               fullWidth
-              //label="Imagen"
-              type="file"
-              accept="image/*"
-              onChange={(e) => setSelectedImage(e.target.files[0])}
-              //value={formik.values.causa_mortandad}
-              //onChange={formik.handleChange}
-              //error={formik.errors.causa_mortandad}
-              //disabled={mode === "DLT" ? true : false}
+              required
+              label="Pesaje"
+              value={formik.values.peso}
+              onChange={formik.handleChange}
+              error={formik.errors.peso}
+              disabled={mode === "DLT" ? true : false}
+              helperText={
+                formik.errors.cantidad
+                  ? "El Pesaje no puede ser negativa."
+                  : null
+              }
             />
           </Grid>
 

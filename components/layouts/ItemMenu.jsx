@@ -25,6 +25,7 @@ import AddHomeWorkOutlinedIcon from "@mui/icons-material/AddHomeWorkOutlined";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import AddHomeOutlinedIcon from "@mui/icons-material/AddHomeOutlined";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "@/hooks";
 
@@ -53,6 +54,11 @@ const data = [
     icon: <MonitorWeightOutlinedIcon />,
     label: "Pesaje",
     path: "/partediaria/pesaje",
+  },
+  {
+    icon: <AssignmentOutlinedIcon />,
+    label: "Movimientos",
+    path: "/partediaria/movimientos",
   },
 ];
 
@@ -133,6 +139,12 @@ export const ItemMenu = () => {
       return;
     }
     switch (menu) {
+      case "Pesaje":
+        router.push("/partediaria/pesaje");
+        break;
+      case "Movimientos":
+        router.push("/partediaria/movimientos");
+        break;
       case "Salida":
         router.push("/partediaria/salida");
         break;

@@ -12,3 +12,5 @@ export * from "./apiNacimiento";
 export * from "./apiEstablesimiento";
 export * from "./apiEntrada";
 export * from "./apiSalida";
+export * from "./apiMovimientos";
+export * from "./apiPesaje";
