@@ -3,7 +3,7 @@ import { ENV, authFetch } from "../utils";
 export class ApiCausaMort {
   async getCausaMort(establesimientoId) {
     try {
-      const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=id`;
+      const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=createdAt:desc`;
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CAUSA_MORTANDAD}?${filters}`;
 
       const response = await authFetch(url);

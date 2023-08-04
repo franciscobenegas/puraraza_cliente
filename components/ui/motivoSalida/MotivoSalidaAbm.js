@@ -17,7 +17,7 @@ const ApiMotivoSalidaCtrl = new ApiMotivoSalida();
 export const MotivoSalidaAbm = (props) => {
   const { setOpen, mode, codId, nombre, setReload } = props;
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user?.establesimiento.id;
   const formik = useFormik({
     initialValues: initialValues(nombre),
     validationSchema: validationSchema(),

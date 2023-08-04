@@ -29,7 +29,7 @@ const ApiMotivoPesajeCtrl = new ApiMotivoPesaje();
 export const PesajeAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user?.establesimiento.id;
   const [clasificacion, setClasificacion] = useState([]);
   const [motivoSalida, setMotivoSalida] = useState([]);
   const [motivoPesaje, setMotivoPesaje] = useState([]);

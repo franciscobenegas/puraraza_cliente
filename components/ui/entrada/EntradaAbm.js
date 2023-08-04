@@ -21,7 +21,7 @@ const clasificacionCtrl = new Clasificacion();
 export const EntradaAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user?.establesimiento.id;
   const [cantidadAdd, setCantidadAdd] = useState(0);
   const [clasificacion, setClasificacion] = useState([]);
   const [motivoEntrada, setMotivoEntrada] = useState([]);

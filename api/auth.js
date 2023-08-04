@@ -2,6 +2,11 @@ import { ENV } from "../utils/constantes";
 
 export class Auth {
   async register(data) {
+    let data2 = {
+      ...data,
+      rol: "Administrador",
+    };
+
     try {
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.AUTH.REGISTER}`;
       const params = {
@@ -9,15 +14,13 @@ export class Auth {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data2),
       };
 
       const response = await fetch(url, params).then((response) =>
         response.json()
       );
 
-      //if (response.jwt === "") throw "Error no se pudo dar de alta Usuario.";
-      //if (response.error.status === 400) throw response.error.message;
       return response;
     } catch (error) {
       console.erro(error);
@@ -45,7 +48,7 @@ export class Auth {
       return response;
     } catch (error) {
       throw error;
-      console.erro(error);
+      console.error(error);
     }
   }
 }

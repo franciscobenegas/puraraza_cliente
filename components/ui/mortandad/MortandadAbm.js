@@ -28,7 +28,7 @@ const movimientosCtrl = new ApiMovimientos();
 export const MortandadAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user?.establesimiento.id;
   const [classi, setclassi] = useState([]);
   const [causaMortandad, setCausaMortandad] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -192,6 +192,7 @@ export const MortandadAbm = (props) => {
               value={formik.values.fecha}
               onChange={formik.handleChange}
               error={formik.errors.fecha}
+              helperText={formik.errors.fecha ? "Debe cargar un valor" : null}
               disabled={mode === "DLT" ? true : false}
               InputLabelProps={{
                 shrink: true,
@@ -265,6 +266,9 @@ export const MortandadAbm = (props) => {
               value={formik.values.clasificacion}
               onChange={formik.handleChange}
               error={formik.errors.clasificacion}
+              helperText={
+                formik.errors.clasificacion ? "Debe seleccionar un valor" : null
+              }
               disabled={mode === "DLT" ? true : false}
             >
               {classi.map((dato) => {
@@ -291,6 +295,11 @@ export const MortandadAbm = (props) => {
               value={formik.values.causa_mortandad}
               onChange={formik.handleChange}
               error={formik.errors.causa_mortandad}
+              helperText={
+                formik.errors.causa_mortandad
+                  ? "Debe seleccionar un valor"
+                  : null
+              }
               disabled={mode === "DLT" ? true : false}
             >
               {causaMortandad.map((item) => {

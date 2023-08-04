@@ -45,7 +45,7 @@ const EntradaHome = () => {
   const [reload, setReload] = useState(false);
   const handleClose = () => setOpen(false);
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user?.establesimiento.id;
   const accionItem = (id, accion, params) => {
     let datos = {
       data: {

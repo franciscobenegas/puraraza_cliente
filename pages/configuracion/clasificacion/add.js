@@ -7,6 +7,7 @@ import {
   Box,
   Grid,
   TextField,
+  MenuItem,
 } from "@mui/material";
 import {
   initialValues,
@@ -79,17 +80,44 @@ const AddPageClasificacion = () => {
                   value={formik.values.nombre}
                   onChange={formik.handleChange}
                   error={formik.errors.nombre}
+                  elperText={formik.errors.nombre ? "Campo Obligatorio" : null}
                 />
               </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  variant="filled"
+                  name="dosAnhos"
+                  required
+                  select
+                  fullWidth
+                  label="Dos Años"
+                  value={formik.values.dosAnhos}
+                  onChange={formik.handleChange}
+                  error={formik.errors.dosAnhos}
+                  elperText={
+                    formik.errors.dosAnhos ? "Campo Obligatorio" : null
+                  }
+                >
+                  <MenuItem key="Mayor" value="Mayor">
+                    Mayor
+                  </MenuItem>
+                  <MenuItem key="Menor" value="Menor">
+                    Menor
+                  </MenuItem>
+                  <MenuItem key="Recien Nacido" value="Recien Nacido">
+                    Recien Nacido
+                  </MenuItem>
+                </TextField>
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   variant="filled"
                   autoComplete="given-name"
                   name="precio"
-                  required
                   fullWidth
                   label="Precio Estimado"
-                  //autoFocus
                   value={formik.values.precio}
                   onChange={formik.handleChange}
                   error={formik.errors.precio}

@@ -120,46 +120,55 @@ const EstablesimientoPage = () => {
         if (responseClasificacion.data.length === 0) {
           await clasificacionCtrl.postNewAll(
             "Vaca",
+            "Mayor",
             establesimientoId,
             userNombre
           );
           await clasificacionCtrl.postNewAll(
             "Toro",
+            "Mayor",
             establesimientoId,
             userNombre
           );
           await clasificacionCtrl.postNewAll(
             "Vaquilla",
+            "Mayor",
             establesimientoId,
             userNombre
           );
           await clasificacionCtrl.postNewAll(
             "Novillo",
+            "Mayor",
             establesimientoId,
             userNombre
           );
           await clasificacionCtrl.postNewAll(
             "Desmamante Macho",
+            "Menor",
             establesimientoId,
             userNombre
           );
           await clasificacionCtrl.postNewAll(
             "Desmamante Hembra",
+            "Menor",
             establesimientoId,
             userNombre
           );
           await clasificacionCtrl.postNewAll(
             "Ternero Macho",
+            "Recien Nacido",
             establesimientoId,
             userNombre
           );
           await clasificacionCtrl.postNewAll(
             "Ternero Hembra",
+            "Recien Nacido",
             establesimientoId,
             userNombre
           );
           await clasificacionCtrl.postNewAll(
             "Buey",
+            "Mayor",
             establesimientoId,
             userNombre
           );

@@ -178,6 +178,9 @@ export const ItemMenu = () => {
       case "Causa Mortandad":
         router.push("/configuracion/causamortandad");
         break;
+      case "Usuarios":
+        router.push("/configuracion/usuario");
+        break;
       case "INICIO":
         router.push("/");
         break;

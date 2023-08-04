@@ -129,14 +129,18 @@ const PaginaInicio = () => {
                 margin="normal"
                 required
                 fullWidth
-                //id="email"
-                label="Usuario o Contraseña"
+                label="Usuario o Email"
                 name="identifier"
                 autoComplete="email"
                 autoFocus
                 value={formik.values.identifier}
                 onChange={formik.handleChange}
                 error={formik.errors.identifier}
+                helperText={
+                  formik.errors.identifier
+                    ? "Debe cargar el usuario o email"
+                    : null
+                }
               />
               <TextField
                 variant="filled"
@@ -145,13 +149,15 @@ const PaginaInicio = () => {
                 fullWidth
                 name="password"
                 label="Contraseña"
-                //type="password"
                 type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="current-password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 error={formik.errors.password}
+                helperText={
+                  formik.errors.password ? "Debe cargar la contraseña" : null
+                }
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">

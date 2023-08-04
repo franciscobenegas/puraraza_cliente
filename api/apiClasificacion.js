@@ -3,7 +3,7 @@ import { ENV, authFetch } from "@/utils";
 export class Clasificacion {
   async getClasificacion(establesimientoId) {
     try {
-      const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=id`;
+      const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=createdAt:desc`;
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CLASIFICACION}?${filters}`;
       const response = await authFetch(url);
       const result = await response.json();
@@ -77,12 +77,13 @@ export class Clasificacion {
     }
   }
 
-  async postNewAll(dato, establesimientoId, user_upd) {
+  async postNewAll(dato, dosAnhos, establesimientoId, user_upd) {
     try {
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CLASIFICACION}`;
       const data = {
         data: {
           nombre: dato,
+          dosAnhos,
           stock: 0,
           establesimiento: establesimientoId,
           user_upd: user_upd,

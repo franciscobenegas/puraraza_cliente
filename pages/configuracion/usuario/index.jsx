@@ -16,13 +16,16 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
 } from "@mui/x-data-grid";
-import { ApiNacimiento } from "@/api";
+
+import { ApiUsuario } from "@/api";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DoDisturbOffOutlinedIcon from "@mui/icons-material/DoDisturbOffOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
+import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import { useAuth } from "../../../hooks";
 import { Loading } from "@/components/ui/Loading";
-import { NacimientoAbm } from "@/components/ui/nacimiento/NacimientoAbm";
+import { UsuarioAbm } from "@/components/ui/usuarios/UsuarioAbm";
 import { DateTime } from "luxon";
 
 function CustomToolbar() {
@@ -33,9 +36,9 @@ function CustomToolbar() {
   );
 }
 
-const ApiNacimientoCtrl = new ApiNacimiento();
+const ApiUsuarioCtrl = new ApiUsuario();
 
-const NacimientoHome = () => {
+const SalidaHome = () => {
   const [data, setData] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [mode, setMode] = useState(null);
@@ -44,17 +47,15 @@ const NacimientoHome = () => {
   const [reload, setReload] = useState(false);
   const handleClose = () => setOpen(false);
   const { user } = useAuth();
-  const establesimientoId = user?.establesimiento.id;
+  const establesimientoId = user.establesimiento.id;
   const accionItem = (id, accion, params) => {
     let datos = {
       data: {
-        fecha: params.row.fecha,
-        tipo_raza: params.row.tipo_razaId,
-        peso: params.row.peso,
-        sexo: params.row.sexo,
-        tipo_Parto: params.row.tipo_Parto,
-        nroCaravana: params.row.nroCaravana,
-        nroCaravanaMadre: params.row.nroCaravanaMadre,
+        nombre: params.row.nombre,
+        apellido: params.row.apellido,
+        email: params.row.email,
+        username: params.row.username,
+        rol: params.row.rol,
       },
     };
     setCodId(id);
@@ -75,15 +76,12 @@ const NacimientoHome = () => {
 
   const columns = [
     { field: "id", headerName: "Codigo", width: 80 },
-    { field: "fechaFormat", headerName: "Fecha", width: 100 },
-    { field: "tipo_raza", headerName: "Tipo Raza", width: 150 },
-    { field: "sexo", headerName: "Sexo", width: 100 },
-    { field: "peso", headerName: "Peso", width: 100 },
-    { field: "tipo_Parto", headerName: "Tipo Parto", width: 100 },
-    { field: "nroCaravana", headerName: "#Caravana", width: 100 },
-    { field: "nroCaravanaMadre", headerName: "#Madre", width: 100 },
-    { field: "updatedAt", headerName: "Actualizado", width: 150 },
-    { field: "user_upd", headerName: "Usuario", width: 80 },
+    { field: "nombre", headerName: "Nombre", width: 150 },
+    { field: "apellido", headerName: "Apellido", width: 150 },
+    { field: "email", headerName: "Correo Electronico", width: 220 },
+    { field: "username", headerName: "Usuario", width: 80 },
+    { field: "rol", headerName: "Roles", width: 120 },
+    { field: "blocked", headerName: "Habilitado", width: 100 },
     {
       field: "actions",
       type: "actions",
@@ -91,16 +89,16 @@ const NacimientoHome = () => {
       headerName: "Accion",
       getActions: (params) => [
         <GridActionsCellItem
-          sx={{ fontSize: 14 }}
-          icon={<ModeEditOutlineOutlinedIcon />}
-          label="Modificar"
+          sx={{ fontSize: 14, color: "#1976D2" }}
+          icon={<KeyOutlinedIcon color="primary" />}
+          label="Cambiar Contraseña"
           showInMenu
           onClick={() => accionItem(params.id, "UPD", params)}
         />,
         <GridActionsCellItem
           sx={{ fontSize: 14, color: "rgb(220, 20, 60)" }}
-          icon={<DeleteIcon color="error" />}
-          label="Eliminar" //<Typography color="error">Eliminar</Typography>
+          icon={<DoDisturbOffOutlinedIcon color="error" />}
+          label="Deshabilitar"
           showInMenu
           onClick={() => accionItem(params.id, "DLT", params)}
         />,
@@ -110,9 +108,8 @@ const NacimientoHome = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await ApiNacimientoCtrl.getAll(establesimientoId);
-      const result = await response.data;
-      setData(result);
+      const response = await ApiUsuarioCtrl.getAll(establesimientoId);
+      setData(response);
       setReload(false);
     })();
   }, [reload]);
@@ -124,22 +121,13 @@ const NacimientoHome = () => {
   const row = map(data, (rowsr) => {
     return {
       id: rowsr.id,
-      //establesimiento: rowsr.attributes.establesimiento.data.attributes.nombre,
-      fecha: rowsr.attributes.fecha,
-      fechaFormat: DateTime.fromISO(rowsr.attributes.fecha).toFormat(
-        "dd/MM/yyyy"
-      ),
-      tipo_raza: rowsr.attributes.tipo_raza.data.attributes.nombre,
-      tipo_razaId: rowsr.attributes.tipo_raza.data.id,
-      sexo: rowsr.attributes.sexo,
-      peso: rowsr.attributes.peso,
-      tipo_Parto: rowsr.attributes.tipo_Parto,
-      nroCaravana: rowsr.attributes.nroCaravana,
-      nroCaravanaMadre: rowsr.attributes.nroCaravanaMadre,
-      updatedAt: DateTime.fromISO(rowsr.attributes.updatedAt).toFormat(
-        "dd/MM/yyyy HH':'mm"
-      ),
-      user_upd: rowsr.attributes.user_upd,
+      establesimiento: rowsr.establesimiento.nombre,
+      nombre: rowsr.nombre,
+      apellido: rowsr.apellido,
+      email: rowsr.email,
+      username: rowsr.username,
+      rol: rowsr.rol,
+      blocked: rowsr.blocked ? "NO" : "SI",
     };
   });
 
@@ -159,7 +147,7 @@ const NacimientoHome = () => {
           mb={3}
         >
           <Typography variant="h4" gutterBottom>
-            Listado Nacimiento
+            Listado Usuarios
           </Typography>
           <Button
             variant="contained"
@@ -202,7 +190,7 @@ const NacimientoHome = () => {
               p: 4,
             }}
           >
-            <NacimientoAbm
+            <UsuarioAbm
               setOpen={setOpen}
               mode={mode}
               dato={dato}
@@ -216,4 +204,4 @@ const NacimientoHome = () => {
   );
 };
 
-export default NacimientoHome;
+export default SalidaHome;

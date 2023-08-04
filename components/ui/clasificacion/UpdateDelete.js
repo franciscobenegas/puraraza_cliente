@@ -7,6 +7,7 @@ import {
   Grid,
   TextField,
   Button,
+  MenuItem,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./UpdateDelete.form";
@@ -16,10 +17,10 @@ import { useAuth } from "@/hooks";
 const clasificacionCtrl = new Clasificacion();
 
 export const UpdateDelete = (props) => {
-  const { setOpen, mode, codId, nombre, precio, setReload } = props;
+  const { setOpen, mode, codId, nombre, precio, setReload, dosAnhos } = props;
   const { user } = useAuth();
   const formik = useFormik({
-    initialValues: initialValues(nombre, precio),
+    initialValues: initialValues(nombre, precio, dosAnhos),
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
@@ -29,6 +30,7 @@ export const UpdateDelete = (props) => {
             data: {
               nombre: formValue.nombre,
               precio: formValue.precio,
+              dosAnhos: formValue.dosAnhos,
               user_upd: user.username,
             },
           };
@@ -71,6 +73,31 @@ export const UpdateDelete = (props) => {
               helperText={formik.errors.nombre ? "Campo Obligatorio" : null}
             />
           </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              variant="filled"
+              name="dosAnhos"
+              select
+              fullWidth
+              label="Dos Años"
+              value={formik.values.dosAnhos}
+              onChange={formik.handleChange}
+              error={formik.errors.dosAnhos}
+              disabled={mode === "UPD" ? false : true}
+            >
+              <MenuItem key="Mayor" value="Mayor">
+                Mayor
+              </MenuItem>
+              <MenuItem key="Menor" value="Menor">
+                Menor
+              </MenuItem>
+              <MenuItem key="Recien Nacido" value="Recien Nacido">
+                Recien Nacido
+              </MenuItem>
+            </TextField>
+          </Grid>
+
           <Grid item xs={12}>
             <TextField
               variant="filled"

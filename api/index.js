@@ -14,3 +14,5 @@ export * from "./apiEntrada";
 export * from "./apiSalida";
 export * from "./apiMovimientos";
 export * from "./apiPesaje";
+export * from "./apiUsuario";
+export * from "./apiNewUser";

@@ -20,7 +20,7 @@ const ApiTipoRazaCtrl = new ApiTipoRaza();
 export const NacimientoAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user?.establesimiento.id;
   const [tipoRaza, setTipoRaza] = useState([]);
 
   const formik = useFormik({
@@ -128,6 +128,9 @@ export const NacimientoAbm = (props) => {
               value={formik.values.fecha}
               onChange={formik.handleChange}
               error={formik.errors.fecha}
+              helperText={
+                formik.errors.fecha ? "Debe seleccionar un valor" : null
+              }
               disabled={mode === "DLT" ? true : false}
               InputLabelProps={{
                 shrink: true,
@@ -158,6 +161,9 @@ export const NacimientoAbm = (props) => {
               value={formik.values.sexo}
               onChange={formik.handleChange}
               error={formik.errors.sexo}
+              helperText={
+                formik.errors.sexo ? "Debe seleccionar un valor" : null
+              }
               disabled={mode === "DLT" ? true : false}
             >
               <MenuItem key="Macho" value="Macho">
@@ -179,6 +185,9 @@ export const NacimientoAbm = (props) => {
               value={formik.values.tipo_Parto}
               onChange={formik.handleChange}
               error={formik.errors.tipo_Parto}
+              helperText={
+                formik.errors.tipo_Parto ? "Debe seleccionar un valor" : null
+              }
               disabled={mode === "DLT" ? true : false}
             >
               <MenuItem key="Normal" value="Normal">
@@ -238,6 +247,9 @@ export const NacimientoAbm = (props) => {
               value={formik.values.tipo_raza}
               onChange={formik.handleChange}
               error={formik.errors.tipo_raza}
+              helperText={
+                formik.errors.tipo_raza ? "Debe seleccionar un valor" : null
+              }
               disabled={mode === "DLT" ? true : false}
             >
               {tipoRaza.map((dato) => {

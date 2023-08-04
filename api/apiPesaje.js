@@ -3,7 +3,7 @@ import { ENV, authFetch } from "../utils";
 export class ApiPesaje {
   async getAll(establesimientoId) {
     try {
-      const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=id`;
+      const filters = `filters[establesimiento][id][$eq]=${establesimientoId}&populate=*&sort=createdAt:desc`;
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PESAJE}?${filters}`;
       const response = await authFetch(url);
       const result = await response.json();

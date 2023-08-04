@@ -44,6 +44,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 const PaginaRegistro = () => {
+  const { translate } = require("traduction");
   const router = useRouter();
   const { user } = useAuth();
   if (user) {
@@ -52,7 +53,7 @@ const PaginaRegistro = () => {
   }
 
   const notify = (error) => {
-    toast.error(error, {
+    toast.error(error + "   👀", {
       position: toast.POSITION.TOP_RIGHT,
       theme: "colored",
     });
@@ -65,10 +66,11 @@ const PaginaRegistro = () => {
     onSubmit: async (formValue) => {
       try {
         const result = await authCtrl.register(formValue);
-        if (result.error.status === 200) {
+        if (result.jwt !== "") {
           router.push("/login/inicio");
         } else {
-          notify(result.error.message);
+          const errormsg = await translate(result.error.message, "en", "es");
+          notify(errormsg);
         }
       } catch (error) {
         console.error(error);
@@ -121,9 +123,12 @@ const PaginaRegistro = () => {
                     id="firstName"
                     label="Nombre"
                     autoFocus
-                    value={formik.values.firstName}
+                    value={formik.values.nombre}
                     onChange={formik.handleChange}
-                    error={formik.errors.firstName}
+                    error={formik.errors.nombre}
+                    helperText={
+                      formik.errors.nombre ? "Debe cargar un valor" : null
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -131,13 +136,15 @@ const PaginaRegistro = () => {
                     variant="filled"
                     required
                     fullWidth
-                    //id="lastName"
                     label="Apellido"
                     name="apellido"
                     autoComplete="family-name"
-                    value={formik.values.lastName}
+                    value={formik.values.apellido}
                     onChange={formik.handleChange}
-                    error={formik.errors.lastName}
+                    error={formik.errors.apellido}
+                    helperText={
+                      formik.errors.nombre ? "Debe cargar un valor" : null
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -152,6 +159,11 @@ const PaginaRegistro = () => {
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     error={formik.errors.email}
+                    helperText={
+                      formik.errors.email
+                        ? "Debe cargar un correo electronico valido"
+                        : null
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -159,13 +171,14 @@ const PaginaRegistro = () => {
                     variant="filled"
                     required
                     fullWidth
-                    //id="userid"
                     label="Nombre Usuario"
                     name="username"
-                    //autoComplete="userid"
-                    value={formik.values.userid}
+                    value={formik.values.username}
                     onChange={formik.handleChange}
-                    error={formik.errors.userid}
+                    error={formik.errors.username}
+                    helperText={
+                      formik.errors.nombre ? "Debe cargar un valor" : null
+                    }
                   />
                 </Grid>
 
@@ -182,6 +195,11 @@ const PaginaRegistro = () => {
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     error={formik.errors.password}
+                    helperText={
+                      formik.errors.password
+                        ? "Debe cargar una contraseña, minimo 6 caracteres"
+                        : "Se requiere minimo de 6 caracteres"
+                    }
                   />
                 </Grid>
               </Grid>

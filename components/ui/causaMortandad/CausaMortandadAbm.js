@@ -17,7 +17,7 @@ const ApiCausaMortCtrl = new ApiCausaMort();
 export const CausaMortandadAbm = (props) => {
   const { setOpen, mode, codId, nombre, setReload } = props;
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user?.establesimiento.id;
   const formik = useFormik({
     initialValues: initialValues(nombre),
     validationSchema: validationSchema(),

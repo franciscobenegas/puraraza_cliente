@@ -45,11 +45,12 @@ const ClasificacionPage = () => {
   const [nombre, setNombre] = useState("");
   const [precio, setPrecio] = useState(0);
   const [reload, setReload] = useState(false);
+  const [dosAnhos, setDosAnhos] = useState("");
   const handleClose = () => setOpen(false);
   const router = useRouter();
   const { user } = useAuth();
 
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user?.establesimiento.id;
 
   const accionItem = (id, accion, params) => {
     switch (accion) {
@@ -59,6 +60,7 @@ const ClasificacionPage = () => {
         setCodId(id);
         setNombre(params.row.nombre);
         setPrecio(params.row.precio);
+        setDosAnhos(params.row.dosAnhos);
         break;
       case "Eliminar":
         setOpen(true);
@@ -66,6 +68,7 @@ const ClasificacionPage = () => {
         setCodId(id);
         setNombre(params.row.nombre);
         setPrecio(params.row.precio);
+        setDosAnhos(params.row.dosAnhos);
         break;
       default:
         break;
@@ -74,14 +77,11 @@ const ClasificacionPage = () => {
 
   const columns = [
     { field: "id", headerName: "Codigo", width: 100 },
-    {
-      field: "establesimiento",
-      headerName: "Establesimiento",
-      width: 150,
-    },
     { field: "nombre", headerName: "Nombre", width: 200 },
+    { field: "dosAnhos", headerName: "Dos Años", width: 150 },
     { field: "stock", headerName: "Cantidad", width: 100 },
-    { field: "precio", headerName: "Costo", width: 100 },
+    { field: "precio", headerName: "Costo Uni.", width: 100 },
+    { field: "inversion", headerName: "Inversion", width: 150 },
     {
       field: "updatedAt",
       headerName: "Actualizado",
@@ -129,10 +129,11 @@ const ClasificacionPage = () => {
   const rows2 = map(data, (row) => {
     return {
       id: row.id,
-      establesimiento: row.attributes.establesimiento.data.attributes.nombre,
       nombre: row.attributes.nombre,
+      dosAnhos: row.attributes.dosAnhos,
       stock: fNumber(row.attributes.stock),
       precio: fNumber(row.attributes.precio),
+      inversion: fNumber(row.attributes.stock * row.attributes.precio),
       updatedAt: DateTime.fromISO(row.attributes.updatedAt).toFormat(
         "dd/MM/yyyy HH':'mm"
       ),
@@ -164,7 +165,7 @@ const ClasificacionPage = () => {
             Agregar
           </Button>
         </Stack>
-        <Box sx={{ height: 500, width: "90%" }}>
+        <Box sx={{ height: 550, width: "100%" }}>
           <DataGrid
             rows={rows2}
             columns={columns}
@@ -204,6 +205,7 @@ const ClasificacionPage = () => {
               nombre={nombre}
               precio={precio}
               setReload={setReload}
+              dosAnhos={dosAnhos}
             />
           </Box>
         </Modal>

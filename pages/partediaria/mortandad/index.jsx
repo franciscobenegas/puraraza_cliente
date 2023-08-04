@@ -75,7 +75,6 @@ const MortandadHome = () => {
 
   const columns = [
     { field: "id", headerName: "Codigo", width: 80 },
-    { field: "establesimiento", headerName: "Establesimiento", width: 150 },
     { field: "fechaFormat", headerName: "Fecha", width: 100 },
     { field: "clasificacion", headerName: "Clasificaicon", width: 180 },
     { field: "causa_mortandad", headerName: "Causa Mortandad", width: 180 },
@@ -120,10 +119,8 @@ const MortandadHome = () => {
   }
 
   const row = map(data, (rowsr) => {
-    //console.log(data);
     return {
       id: rowsr.id,
-      establesimiento: rowsr.attributes.establesimiento.data.attributes.nombre,
       fecha: rowsr.attributes.fecha,
       fechaFormat: DateTime.fromISO(rowsr.attributes.fecha).toFormat(
         "dd/MM/yyyy"
