@@ -10,18 +10,22 @@ import {
 } from "@mui/material";
 import { initialValues, validationSchema } from "./NacimientoAbm.form";
 import { useFormik } from "formik";
-import { ApiNacimiento, ApiTipoRaza } from "../../../api";
+import { ApiNacimiento, ApiTipoRaza, Clasificacion } from "../../../api";
 import { Loading } from "../Loading";
 import { useAuth } from "@/hooks";
 
 const ApiNacimientoCtrl = new ApiNacimiento();
 const ApiTipoRazaCtrl = new ApiTipoRaza();
+const clasificacionCtrl = new Clasificacion();
 
 export const NacimientoAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
   const { user } = useAuth();
   const establesimientoId = user?.establesimiento.id;
   const [tipoRaza, setTipoRaza] = useState([]);
+  const [clasificacionMenor, setClasificacionMenor] = useState([]);
+  const [stock, setStock] = useState(0);
+  const [idClasificaicon, setIdClasificaicon] = useState(0);
 
   const formik = useFormik({
     initialValues: initialValues(dato),
@@ -44,6 +48,18 @@ export const NacimientoAbm = (props) => {
             },
           };
           await ApiNacimientoCtrl.postData(body);
+
+          try {
+            let body = {
+              data: {
+                stock: parseInt(stock) + 1,
+              },
+            };
+            await clasificacionCtrl.update(body, idClasificaicon);
+          } catch (error) {
+            console.error(error);
+          }
+
           formik.handleReset();
           setReload(true);
           setOpen(false);
@@ -97,9 +113,37 @@ export const NacimientoAbm = (props) => {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const response = await clasificacionCtrl.getClasificacion(
+        establesimientoId
+      );
+      const result = await response.data;
+      const dataMenor = result.filter(
+        (item) => item.attributes.dosAnhos === "Menor"
+      );
+      setClasificacionMenor(dataMenor);
+    })();
+  }, []);
+
   if (!tipoRaza) {
     return <Loading />;
   }
+
+  const onMenuItemClick = (sexo) => {
+    const resultData = clasificacionMenor.filter((item) =>
+      item.attributes.nombre.match(sexo)
+    );
+    console.log(resultData);
+    setStock(resultData[0].attributes.stock);
+    setIdClasificaicon(resultData[0].id);
+
+    //console.log(stock);
+    //console.log(idClasificaicon);
+    //setClasificacionMenorSexo(resultData);
+    //console.log(resultData);
+    //console.log(clasificacionMenorSexo);
+  };
 
   return (
     <>
@@ -166,10 +210,18 @@ export const NacimientoAbm = (props) => {
               }
               disabled={mode === "DLT" ? true : false}
             >
-              <MenuItem key="Macho" value="Macho">
+              <MenuItem
+                key="Macho"
+                value="Macho"
+                onClick={() => onMenuItemClick("Macho")}
+              >
                 Macho
               </MenuItem>
-              <MenuItem key="Hembra" value="Hembra">
+              <MenuItem
+                key="Hembra"
+                value="Hembra"
+                onClick={() => onMenuItemClick("Hembra")}
+              >
                 Hembra
               </MenuItem>
             </TextField>
