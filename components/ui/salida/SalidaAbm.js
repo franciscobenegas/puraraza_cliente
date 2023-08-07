@@ -10,13 +10,19 @@ import {
 } from "@mui/material";
 import { initialValues, validationSchema } from "./SalidaAbm.form";
 import { useFormik } from "formik";
-import { ApiSalida, Clasificacion, ApiMotivoSalida } from "../../../api";
+import {
+  ApiSalida,
+  Clasificacion,
+  ApiMotivoSalida,
+  ApiMovimientos,
+} from "../../../api";
 import { Loading } from "../Loading";
 import { useAuth } from "@/hooks";
 
 const ApiSalidaCtrl = new ApiSalida();
 const ApiMotivoSalidaCtrl = new ApiMotivoSalida();
 const clasificacionCtrl = new Clasificacion();
+const movimientosCtrl = new ApiMovimientos();
 
 export const SalidaAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
@@ -45,6 +51,24 @@ export const SalidaAbm = (props) => {
             },
           };
           await ApiSalidaCtrl.postData(body);
+
+          try {
+            let body = {
+              data: {
+                fecha: new Date().toISOString().slice(0, 10),
+                tipoMovimiento: "Salida",
+                cantidad: formValue.cantidad,
+                user_upd: user.username,
+                stockActual: parseInt(cantidadResta),
+                establesimiento: establesimientoId,
+                clasificacion: formValue.clasificacion,
+              },
+            };
+            await movimientosCtrl.postData(body);
+          } catch (error) {
+            console.error(error);
+          }
+
           formik.handleReset();
           setReload(true);
           setOpen(false);
