@@ -21,6 +21,7 @@ import {
   ApiCausaMort,
   ApiMotivoEntrada,
   ApiMotivoSalida,
+  ApiTipoRaza,
 } from "@/api";
 import { Clasificacion } from "@/api";
 import { toast, ToastContainer } from "react-toastify";
@@ -30,6 +31,7 @@ const clasificacionCtrl = new Clasificacion();
 const causaMortandadCtrl = new ApiCausaMort();
 const motivoEntradaCtrl = new ApiMotivoEntrada();
 const motivoSalidaCtrl = new ApiMotivoSalida();
+const tipoRazaCtrl = new ApiTipoRaza();
 
 const notify = () => {
   toast.success("Datos Actualizado exitosamente!!!", {
@@ -256,6 +258,100 @@ const EstablesimientoPage = () => {
             },
           };
           await motivoSalidaCtrl.postData(bodyMS1);
+        }
+
+        // TODO: Si no existe Tipo de Raza lo carga por defecto.
+        const responseTipoRaza = await tipoRazaCtrl.getAll(establesimientoId);
+        if (responseTipoRaza.data.length === 0) {
+          let bodyTR = {
+            data: {
+              nombre: "Ninguno",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR);
+
+          let bodyTR1 = {
+            data: {
+              nombre: "Brahman",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR1);
+
+          let bodyTR2 = {
+            data: {
+              nombre: "Beefmaster",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR2);
+
+          let bodyTR3 = {
+            data: {
+              nombre: "Charolais",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR3);
+
+          let bodyTR4 = {
+            data: {
+              nombre: "Simmental",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR4);
+
+          let bodyTR5 = {
+            data: {
+              nombre: "Angus",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR5);
+
+          let bodyTR6 = {
+            data: {
+              nombre: "Brangus",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR6);
+
+          let bodyTR7 = {
+            data: {
+              nombre: "Nelore",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR7);
+
+          let bodyTR8 = {
+            data: {
+              nombre: "Santa Gertrudis",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR8);
+
+          let bodyTR9 = {
+            data: {
+              nombre: "Hereford",
+              establesimiento: establesimientoId,
+              user_upd: userNombre,
+            },
+          };
+          await tipoRazaCtrl.postData(bodyTR9);
         }
       }
     })();

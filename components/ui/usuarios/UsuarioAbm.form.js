@@ -17,7 +17,6 @@ export function initialValues(data) {
 }
 
 export function validationSchema(mode) {
-  console.log(mode);
   if (mode === "UPD") {
     return Yup.object({
       password: Yup.string().required(true).min(6),

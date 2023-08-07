@@ -17,7 +17,6 @@ export class ApiUsuario {
   }
 
   async postData(data) {
-    console.log(data);
     try {
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.USUARIO}`;
       const params = {
@@ -29,9 +28,7 @@ export class ApiUsuario {
       };
 
       const response = await authFetch(url, params);
-      console.log(response);
       const result = await response.json();
-      console.log(result);
 
       if (response.status !== 200) throw response;
       return result;

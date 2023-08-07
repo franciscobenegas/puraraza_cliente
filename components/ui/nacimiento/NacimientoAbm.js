@@ -10,13 +10,19 @@ import {
 } from "@mui/material";
 import { initialValues, validationSchema } from "./NacimientoAbm.form";
 import { useFormik } from "formik";
-import { ApiNacimiento, ApiTipoRaza, Clasificacion } from "../../../api";
+import {
+  ApiNacimiento,
+  ApiTipoRaza,
+  Clasificacion,
+  ApiMovimientos,
+} from "../../../api";
 import { Loading } from "../Loading";
 import { useAuth } from "@/hooks";
 
 const ApiNacimientoCtrl = new ApiNacimiento();
 const ApiTipoRazaCtrl = new ApiTipoRaza();
 const clasificacionCtrl = new Clasificacion();
+const movimientosCtrl = new ApiMovimientos();
 
 export const NacimientoAbm = (props) => {
   const { setOpen, mode, dato, codId, setReload } = props;
@@ -56,6 +62,23 @@ export const NacimientoAbm = (props) => {
               },
             };
             await clasificacionCtrl.update(body, idClasificaicon);
+          } catch (error) {
+            console.error(error);
+          }
+
+          try {
+            let body = {
+              data: {
+                fecha: new Date().toISOString().slice(0, 10),
+                tipoMovimiento: "Nacimiento",
+                cantidad: 1,
+                user_upd: user.username,
+                stockActual: parseInt(stock),
+                establesimiento: establesimientoId,
+                clasificacion: idClasificaicon,
+              },
+            };
+            await movimientosCtrl.postData(body);
           } catch (error) {
             console.error(error);
           }
@@ -122,9 +145,7 @@ export const NacimientoAbm = (props) => {
       const dataMenor = result.filter(
         (item) => item.attributes.dosAnhos === "Recien Nacido"
       );
-      //console.log(dataMenor);
       setClasificacionMenor(dataMenor);
-      //console.log(clasificacionMenor);
     })();
   }, []);
 
@@ -133,21 +154,11 @@ export const NacimientoAbm = (props) => {
   }
 
   const onMenuItemClick = (sexo) => {
-    console.log(sexo);
-    console.log(clasificacionMenor);
-
     const resultData = clasificacionMenor.filter((item) =>
       item.attributes.nombre.toLowerCase().match(sexo.toLowerCase())
     );
-    console.log(resultData);
     setStock(resultData[0]?.attributes.stock);
     setIdClasificaicon(resultData[0]?.id);
-
-    //console.log(stock);
-    //console.log(idClasificaicon);
-    //setClasificacionMenorSexo(resultData);
-    //console.log(resultData);
-    //console.log(clasificacionMenorSexo);
   };
 
   return (

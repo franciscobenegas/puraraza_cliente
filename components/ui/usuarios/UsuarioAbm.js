@@ -29,12 +29,9 @@ export const UsuarioAbm = (props) => {
     validationSchema: validationSchema(mode),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log(formValue);
-
       if (mode === "ADD") {
         try {
-          const result = await ApiNewUserCtrl.register(formValue);
-          console.log(result);
+          await ApiNewUserCtrl.register(formValue);
           formik.handleReset();
           setReload(true);
           setOpen(false);
@@ -44,14 +41,11 @@ export const UsuarioAbm = (props) => {
       }
 
       if (mode === "DLT") {
-        console.log("DLT");
         try {
           let body = {
             blocked: true,
           };
-          console.log(body);
-          const result = await ApiUsauarioCtrl.update(body, codId);
-          console.log(result);
+          await ApiUsauarioCtrl.update(body, codId);
           setReload(true);
           setOpen(false);
         } catch (error) {
@@ -64,9 +58,7 @@ export const UsuarioAbm = (props) => {
           let body = {
             password: formValue.password,
           };
-          console.log(body);
-          const result = await ApiUsauarioCtrl.update(body, codId);
-          console.log(result);
+          await ApiUsauarioCtrl.update(body, codId);
           setReload(true);
           setOpen(false);
         } catch (error) {

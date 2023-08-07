@@ -82,7 +82,6 @@ const PaginaRecuperaContrasena = () => {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log(formValue);
       try {
         emailjs.send(SERVICE_ID, TEMPLATE_ID, formValue, USER_ID).then(() => {
           console.log("Email Enviado con Exito");

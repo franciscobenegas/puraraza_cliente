@@ -87,7 +87,6 @@ const MovimientosHome = () => {
     (async () => {
       const response = await ApiMovimientosCtrl.getAll(establesimientoId);
       const result = await response.data;
-      console.log(result);
       setData(result);
       setReload(false);
     })();
