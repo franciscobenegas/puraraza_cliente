@@ -120,9 +120,11 @@ export const NacimientoAbm = (props) => {
       );
       const result = await response.data;
       const dataMenor = result.filter(
-        (item) => item.attributes.dosAnhos === "Menor"
+        (item) => item.attributes.dosAnhos === "Recien Nacido"
       );
+      //console.log(dataMenor);
       setClasificacionMenor(dataMenor);
+      //console.log(clasificacionMenor);
     })();
   }, []);
 
@@ -131,12 +133,15 @@ export const NacimientoAbm = (props) => {
   }
 
   const onMenuItemClick = (sexo) => {
+    console.log(sexo);
+    console.log(clasificacionMenor);
+
     const resultData = clasificacionMenor.filter((item) =>
-      item.attributes.nombre.match(sexo)
+      item.attributes.nombre.toLowerCase().match(sexo.toLowerCase())
     );
     console.log(resultData);
-    setStock(resultData[0].attributes.stock);
-    setIdClasificaicon(resultData[0].id);
+    setStock(resultData[0]?.attributes.stock);
+    setIdClasificaicon(resultData[0]?.id);
 
     //console.log(stock);
     //console.log(idClasificaicon);
