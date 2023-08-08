@@ -2,6 +2,7 @@ import * as React from "react";
 import { ResponsiveDrawer } from "@/components/layouts";
 import { map } from "lodash";
 import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import {
   Stack,
   Container,
@@ -16,17 +17,13 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
 } from "@mui/x-data-grid";
-
 import { ApiUsuario } from "@/api";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import DoDisturbOffOutlinedIcon from "@mui/icons-material/DoDisturbOffOutlined";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import { useAuth } from "../../../hooks";
 import { Loading } from "@/components/ui/Loading";
 import { UsuarioAbm } from "@/components/ui/usuarios/UsuarioAbm";
-import { DateTime } from "luxon";
 
 function CustomToolbar() {
   return (
@@ -47,30 +44,46 @@ const SalidaHome = () => {
   const [reload, setReload] = useState(false);
   const handleClose = () => setOpen(false);
   const { user } = useAuth();
-  const establesimientoId = user.establesimiento.id;
+  const establesimientoId = user?.establesimiento.id;
   const accionItem = (id, accion, params) => {
-    let datos = {
-      data: {
-        nombre: params.row.nombre,
-        apellido: params.row.apellido,
-        email: params.row.email,
-        username: params.row.username,
-        rol: params.row.rol,
-      },
-    };
-    setCodId(id);
-    switch (accion) {
-      case "DLT":
-        setOpen(true);
-        setMode("DLT");
-        setDato(datos);
-        break;
-      case "UPD":
-        setOpen(true);
-        setMode("UPD");
-        setDato(datos);
+    console.log(user.rol);
 
-        break;
+    const notify = () => {
+      toast.error(
+        "Solo el usuario Administrador puede cambiar parametros de Usuario",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+          theme: "colored",
+        }
+      );
+    };
+
+    if (user.rol === "Administrador") {
+      let datos = {
+        data: {
+          nombre: params.row.nombre,
+          apellido: params.row.apellido,
+          email: params.row.email,
+          username: params.row.username,
+          rol: params.row.rol,
+        },
+      };
+      setCodId(id);
+      switch (accion) {
+        case "DLT":
+          setOpen(true);
+          setMode("DLT");
+          setDato(datos);
+          break;
+        case "UPD":
+          setOpen(true);
+          setMode("UPD");
+          setDato(datos);
+
+          break;
+      }
+    } else {
+      notify();
     }
   };
 
@@ -139,6 +152,7 @@ const SalidaHome = () => {
 
   return (
     <ResponsiveDrawer>
+      <ToastContainer autoClose={8000} />
       <Container>
         <Stack
           direction="row"
