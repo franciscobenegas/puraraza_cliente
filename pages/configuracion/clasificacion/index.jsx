@@ -181,6 +181,11 @@ const ClasificacionPage = () => {
             slots={{
               toolbar: CustomToolbar,
             }}
+            sx={{
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
           />
         </Box>
 

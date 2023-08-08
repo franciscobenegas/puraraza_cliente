@@ -10,6 +10,7 @@ import {
   Button,
   Box,
   Modal,
+  Chip,
 } from "@mui/material";
 import {
   DataGrid,
@@ -24,6 +25,7 @@ import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import { useAuth } from "../../../hooks";
 import { Loading } from "@/components/ui/Loading";
 import { UsuarioAbm } from "@/components/ui/usuarios/UsuarioAbm";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 function CustomToolbar() {
   return (
@@ -46,8 +48,6 @@ const SalidaHome = () => {
   const { user } = useAuth();
   const establesimientoId = user?.establesimiento.id;
   const accionItem = (id, accion, params) => {
-    console.log(user.rol);
-
     const notify = () => {
       toast.error(
         "Solo el usuario Administrador puede cambiar parametros de Usuario",
@@ -89,7 +89,11 @@ const SalidaHome = () => {
 
   const columns = [
     { field: "id", headerName: "Codigo", width: 80 },
-    { field: "nombre", headerName: "Nombre", width: 150 },
+    {
+      field: "nombre",
+      headerName: "Nombre",
+      width: 150,
+    },
     { field: "apellido", headerName: "Apellido", width: 150 },
     { field: "email", headerName: "Correo Electronico", width: 220 },
     { field: "username", headerName: "Usuario", width: 80 },
@@ -171,7 +175,20 @@ const SalidaHome = () => {
             Agregar
           </Button>
         </Stack>
-        <Box sx={{ height: 550, width: "100%" }}>
+        <Box
+          sx={{
+            height: 550,
+            width: "100%",
+            "& .cold": {
+              backgroundColor: "#b9d5ff91",
+              color: "#1a3e72",
+            },
+            "& .hot": {
+              backgroundColor: "#ff943975",
+              color: "#1a3e72",
+            },
+          }}
+        >
           <DataGrid
             rows={row}
             columns={columns}
@@ -186,6 +203,11 @@ const SalidaHome = () => {
             pageSizeOptions={[10]}
             slots={{
               toolbar: CustomToolbar,
+            }}
+            sx={{
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
             }}
           />
         </Box>

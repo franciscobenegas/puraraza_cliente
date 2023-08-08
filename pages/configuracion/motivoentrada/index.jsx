@@ -159,6 +159,11 @@ const MotivoEntradaPage = () => {
             slots={{
               toolbar: CustomToolbar,
             }}
+            sx={{
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
           />
         </Box>
 
