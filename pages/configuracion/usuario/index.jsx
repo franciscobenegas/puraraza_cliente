@@ -180,10 +180,17 @@ const SalidaHome = () => {
             height: 550,
             width: "100%",
             "& .cold": {
+              //borderColor: "ActiveBorder",
+              borderRadius: 25,
               backgroundColor: "#b9d5ff91",
               color: "#1a3e72",
+              maxHeight: 15,
+              paddingLeft: 5,
             },
             "& .hot": {
+              //borderColor: "ActiveBorder",
+              borderRadius: 25,
+              paddingLeft: 5,
               backgroundColor: "#ff943975",
               color: "#1a3e72",
             },
@@ -192,6 +199,11 @@ const SalidaHome = () => {
           <DataGrid
             rows={row}
             columns={columns}
+            getCellClassName={(params) => {
+              if (params.field === "blocked") {
+                return params.value === "SI" ? "cold" : "hot";
+              }
+            }}
             pageSize={10}
             initialState={{
               pagination: {

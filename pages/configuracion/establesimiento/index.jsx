@@ -25,6 +25,8 @@ import {
 } from "@/api";
 import { Clasificacion } from "@/api";
 import { toast, ToastContainer } from "react-toastify";
+import confetti from "canvas-confetti";
+import { useRouter } from "next/router.js";
 
 const ApiEstablesimientoCtrl = new ApiEstablesimiento();
 const clasificacionCtrl = new Clasificacion();
@@ -48,7 +50,7 @@ const notifyError = () => {
 };
 
 const recargar = () => {
-  window.location.reload(true);
+  window.setTimeout(window.location.reload(true), 5000);
 };
 
 const EstablesimientoPage = () => {
@@ -56,6 +58,7 @@ const EstablesimientoPage = () => {
   const establesimientoId = user?.establesimiento?.id;
   const userId = user?.id;
   const userNombre = user?.username;
+  const router = useRouter();
 
   let body = {
     data: {
@@ -100,9 +103,10 @@ const EstablesimientoPage = () => {
             },
           };
           await ApiEstablesimientoCtrl.postData(body2);
-          recargar();
-
           notify();
+          confetti();
+          router.push("/");
+          recargar();
         } catch (error) {
           console.error(error);
           notifyError();
