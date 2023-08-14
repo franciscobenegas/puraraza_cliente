@@ -115,7 +115,7 @@ const PaginaInicio = () => {
             </Avatar>
 
             <Typography component="h1" variant="h5">
-              Iniciar Sesion
+              Iniciar Sesion Ubuntu
             </Typography>
 
             <Box
