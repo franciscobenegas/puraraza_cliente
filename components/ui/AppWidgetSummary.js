@@ -6,7 +6,7 @@ import { Card, Icon, Typography } from "@mui/material";
 import { fShortenNumber } from "../../utils/formatNumber";
 // components
 
-import palette from "@/theme/palette";
+import palette from "../../theme/palette";
 import SpeedOutlinedIcon from "@mui/icons-material/SpeedOutlined";
 
 const StyledIcon = styled("div")(({ theme }) => ({

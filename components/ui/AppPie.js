@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie, Doughnut } from "react-chartjs-2";
 import { Box, Paper } from "@mui/material";
-import { Clasificacion } from "@/api";
-import { useAuth } from "@/hooks";
+import { Clasificacion } from "../../api";
+import { useAuth } from "../../hooks";
 
 const clasificacionCtrl = new Clasificacion();
 

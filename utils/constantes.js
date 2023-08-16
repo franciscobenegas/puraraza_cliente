@@ -13,7 +13,6 @@ export const ENV = {
       LOGIN: "auth/local",
     },
     USERS_ME: "users/me",
-
     USERS: "users",
     CAUSA_MORTANDAD: "causa-mortandads",
     CLASIFICACION: "clasificacions",
@@ -29,6 +28,7 @@ export const ENV = {
     MOVIMIENTOS: "movimientos",
     PESAJE: "pesajes",
     USUARIO: "users",
+
   },
   TOKEN: "Token_PuraRazapp",
   CART: "cart",

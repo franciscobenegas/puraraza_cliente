@@ -27,7 +27,7 @@ import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import AddHomeOutlinedIcon from "@mui/icons-material/AddHomeOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import { toast, ToastContainer } from "react-toastify";
-import { useAuth } from "@/hooks";
+import { useAuth } from "../../hooks";
 
 const data = [
   {

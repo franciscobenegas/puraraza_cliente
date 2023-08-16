@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { ResponsiveDrawer } from "@/components/layouts";
+import { ResponsiveDrawer } from "../components/layouts";
 import { Grid } from "@mui/material";
 import { AppWidgetSummary, AppConversionRates, AppPie } from "../components/ui";
 import { useAuth } from "/hooks";
 import { useRouter } from "next/router";
-import { ApiMortandad } from "@/api";
+import { ApiMortandad } from "../api";
 
 const ApiMortandadCtrl = new ApiMortandad();
 

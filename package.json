@@ -32,10 +32,13 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-toastify": "^9.1.1",
+    "resend": "^1.0.0",
     "traduction": "^1.6.0",
     "yup": "^1.0.2"
   },
   "devDependencies": {
-    "@iconify/react": "^4.1.0"
+    "@iconify/react": "^4.1.0",
+    "@types/node": "20.5.0",
+    "typescript": "5.1.6"
   }
 }

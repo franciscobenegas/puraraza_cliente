@@ -1,4 +1,4 @@
-import { ENV, authFetch } from "@/utils";
+import { ENV, authFetch } from "../utils";
 
 export class Clasificacion {
   async getClasificacion(establesimientoId) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { ResponsiveDrawer } from "@/components/layouts";
+import { ResponsiveDrawer } from "../components/layouts";
 
 const Custom404 = () => {
   return (

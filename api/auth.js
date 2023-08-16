@@ -23,7 +23,7 @@ export class Auth {
 
       return response;
     } catch (error) {
-      console.erro(error);
+      console.error(error);
       throw error;
     }
   }
