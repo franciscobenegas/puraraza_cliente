@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./UpdateDelete.form";
-import { Clasificacion } from "@/api";
-import { useAuth } from "@/hooks";
+import { Clasificacion } from "../../../api";
+import { useAuth } from "../../../hooks";
 
 const clasificacionCtrl = new Clasificacion();
 

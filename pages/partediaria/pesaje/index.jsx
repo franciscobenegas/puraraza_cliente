@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ResponsiveDrawer } from "@/components/layouts";
+import { ResponsiveDrawer } from "../../../components/layouts";
 import { map } from "lodash";
 import { useEffect, useState } from "react";
 import {
@@ -17,13 +17,13 @@ import {
   GridToolbarExport,
 } from "@mui/x-data-grid";
 
-import { ApiPesaje } from "@/api";
+import { ApiPesaje } from "../../../api";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import { useAuth } from "../../../hooks";
-import { Loading } from "@/components/ui/Loading";
-import { PesajeAbm } from "@/components/ui/pesaje/PesajeAbm";
+import { Loading } from "../../../components/ui/Loading";
+import { PesajeAbm } from "../../../components/ui/pesaje/PesajeAbm";
 import { DateTime } from "luxon";
 
 function CustomToolbar() {

@@ -13,7 +13,7 @@ import {
 import { initialValues, validationSchema } from "./UsuarioAbm.form";
 import { useFormik } from "formik";
 import { ApiNewUser, ApiUsuario } from "../../../api";
-import { useAuth } from "@/hooks";
+import { useAuth } from "../../../hooks";
 
 const ApiNewUserCtrl = new ApiNewUser();
 const ApiUsauarioCtrl = new ApiUsuario();

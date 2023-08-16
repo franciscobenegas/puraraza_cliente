@@ -1,5 +1,5 @@
 import React from "react";
-import { ResponsiveDrawer } from "@/components/layouts";
+import { ResponsiveDrawer } from "../../../components/layouts";
 import {
   Container,
   Typography,
@@ -14,7 +14,7 @@ import {
   validationSchema,
 } from "../../../components/ui/clasificacion/add.form.js";
 import { useFormik } from "formik";
-import { Clasificacion } from "@/api";
+import { Clasificacion } from "../../../api";
 import { useAuth } from "../../../hooks";
 import { useRouter } from "next/router";
 

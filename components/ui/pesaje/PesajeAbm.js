@@ -18,7 +18,7 @@ import {
   ApiPesaje,
 } from "../../../api";
 import { Loading } from "../Loading";
-import { useAuth } from "@/hooks";
+import { useAuth } from "../../../hooks";
 
 const ApiSalidaCtrl = new ApiSalida();
 const ApiMotivoSalidaCtrl = new ApiMotivoSalida();

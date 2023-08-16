@@ -17,7 +17,7 @@ import {
   ApiMovimientos,
 } from "../../../api";
 import { Loading } from "../Loading";
-import { useAuth } from "@/hooks";
+import { useAuth } from "../../../hooks";
 
 const ApiEntradaCtrl = new ApiEntrada();
 const ApiMotivoEntradaCtrl = new ApiMotivoEntrada();

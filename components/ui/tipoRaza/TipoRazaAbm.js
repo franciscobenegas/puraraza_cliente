@@ -10,7 +10,7 @@ import {
 import { initialValues, validationSchema } from "./TipoRazaAbm.form";
 import { useFormik } from "formik";
 import { ApiTipoRaza } from "../../../api";
-import { useAuth } from "@/hooks";
+import { useAuth } from "../../../hooks";
 
 const ApiTipoRazaCtrl = new ApiTipoRaza();
 

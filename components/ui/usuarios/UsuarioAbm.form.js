@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useAuth } from "@/hooks";
+import { useAuth } from "../../../hooks";
 
 export function initialValues(data) {
   const { user } = useAuth();

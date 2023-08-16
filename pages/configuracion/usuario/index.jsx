@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ResponsiveDrawer } from "@/components/layouts";
+import { ResponsiveDrawer } from "../../../components/layouts";
 import { map } from "lodash";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
@@ -18,13 +18,13 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
 } from "@mui/x-data-grid";
-import { ApiUsuario } from "@/api";
+import { ApiUsuario } from "../../../api";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import DoDisturbOffOutlinedIcon from "@mui/icons-material/DoDisturbOffOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import { useAuth } from "../../../hooks";
-import { Loading } from "@/components/ui/Loading";
-import { UsuarioAbm } from "@/components/ui/usuarios/UsuarioAbm";
+import { Loading } from "../../../components/ui/Loading";
+import { UsuarioAbm } from "../../../components/ui/usuarios/UsuarioAbm";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 function CustomToolbar() {

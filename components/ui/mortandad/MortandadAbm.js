@@ -18,7 +18,7 @@ import {
   ApiMovimientos,
 } from "../../../api";
 import { Loading } from "../Loading";
-import { useAuth } from "@/hooks";
+import { useAuth } from "../../../hooks";
 
 const ApiMortandadCtrl = new ApiMortandad();
 const clasificacionCtrl = new Clasificacion();

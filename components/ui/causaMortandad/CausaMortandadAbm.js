@@ -10,7 +10,7 @@ import {
 import { initialValues, validationSchema } from "./CausaMortandadAbm.form";
 import { useFormik } from "formik";
 import { ApiCausaMort } from "../../../api";
-import { useAuth } from "@/hooks";
+import { useAuth } from "../../../hooks";
 
 const ApiCausaMortCtrl = new ApiCausaMort();
 

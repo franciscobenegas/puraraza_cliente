@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ResponsiveDrawer } from "@/components/layouts";
+import { ResponsiveDrawer } from "../../../components/layouts";
 import { map } from "lodash";
 import { useEffect, useState } from "react";
 import {
@@ -16,14 +16,14 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
 } from "@mui/x-data-grid";
-import { Clasificacion } from "@/api";
+import { Clasificacion } from "../../../api";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import { useRouter } from "next/router";
 import { useAuth } from "../../../hooks";
-import { Loading } from "@/components/ui/Loading";
-import { UpdateDelete } from "@/components/ui/clasificacion/UpdateDelete";
+import { Loading } from "../../../components/ui/Loading";
+import { UpdateDelete } from "../../../components/ui/clasificacion/UpdateDelete";
 import { DateTime } from "luxon";
 import { fNumber } from "../../../utils/formatNumber";
 

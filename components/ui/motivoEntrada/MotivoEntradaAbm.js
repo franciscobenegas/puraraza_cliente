@@ -10,7 +10,7 @@ import {
 import { initialValues, validationSchema } from "./MotivoEntradaAbm.form";
 import { useFormik } from "formik";
 import { ApiMotivoEntrada } from "../../../api";
-import { useAuth } from "@/hooks";
+import { useAuth } from "../../../hooks";
 
 const ApiMotivoEntradaCtrl = new ApiMotivoEntrada();
 

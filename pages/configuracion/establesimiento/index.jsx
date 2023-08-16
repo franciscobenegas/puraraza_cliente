@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "@/hooks";
-import { ResponsiveDrawer } from "@/components/layouts";
+import { useAuth } from "../../../hooks";
+import { ResponsiveDrawer } from "../../../components/layouts";
 import {
   Container,
   Stack,
@@ -22,8 +22,8 @@ import {
   ApiMotivoEntrada,
   ApiMotivoSalida,
   ApiTipoRaza,
-} from "@/api";
-import { Clasificacion } from "@/api";
+} from "../../../api";
+import { Clasificacion } from "../../../api";
 import { toast, ToastContainer } from "react-toastify";
 import confetti from "canvas-confetti";
 import { useRouter } from "next/router.js";
