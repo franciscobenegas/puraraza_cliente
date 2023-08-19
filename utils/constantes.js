@@ -1,7 +1,7 @@
 export const ENV = {
   // Base de Datos Local
-   //SERVER_HOST: "http://localhost:1337",
-   //API_URL: "http://localhost:1337/api",
+  //SERVER_HOST: "http://localhost:1337",
+  //API_URL: "http://localhost:1337/api",
 
   // Base de Datos Nube
   SERVER_HOST: "https://strapi-production-3882.up.railway.app",
@@ -28,7 +28,6 @@ export const ENV = {
     MOVIMIENTOS: "movimientos",
     PESAJE: "pesajes",
     USUARIO: "users",
-
   },
   TOKEN: "Token_PuraRazapp",
   CART: "cart",
