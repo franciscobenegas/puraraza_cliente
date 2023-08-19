@@ -45,7 +45,7 @@ function Copyright(props) {
         Pura Raza S.A.
       </Link>{" "}
       {new Date().getFullYear()}
-      {". V2.0"}
+      {"."}
     </Typography>
   );
 }

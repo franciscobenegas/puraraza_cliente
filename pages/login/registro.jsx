@@ -173,7 +173,7 @@ const PaginaRegistro = () => {
                     fullWidth
                     label="Nombre Usuario"
                     name="username"
-                    value={formik.values.username}
+                    value={formik.values.username.toLowerCase()}
                     onChange={formik.handleChange}
                     error={formik.errors.username}
                     helperText={
