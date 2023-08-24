@@ -12,12 +12,12 @@ export const SwitchModeButton = () => {
     <Box
       sx={{
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        //alignItems: "center",
+        //justifyContent: "center",
       }}
     >
       <IconButton
-        sx={{ ml: 1 }}
+        //sx={{ ml: 1 }}
         onClick={colorMode.toggleColorMode}
         color="inherit"
       >

@@ -27,7 +27,8 @@ export const LayoutPrincipal = (props) => {
   //const establesimientoId = user.establesimiento?.id;
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  //console.log(drawerWidth);
+  //console.log(handleDrawerToggle);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -113,6 +114,11 @@ export const LayoutPrincipal = (props) => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
+        <SwitchModeButton />
+        <p>Modo Oscuro</p>
+      </MenuItem>
+
+      <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="error">
             <MailIcon />
@@ -120,6 +126,7 @@ export const LayoutPrincipal = (props) => {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
+
       <MenuItem>
         <IconButton
           size="large"
