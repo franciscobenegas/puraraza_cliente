@@ -1,6 +1,6 @@
 export const ENV = {
   // Base de Datos Local
-  //SERVER_HOST: "http://localhost:1337",
+  // SERVER_HOST: "http://localhost:1337",
   //API_URL: "http://localhost:1337/api",
 
   // Base de Datos Nube

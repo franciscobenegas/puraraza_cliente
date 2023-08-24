@@ -17,6 +17,7 @@ import { useAuth } from "../../hooks";
 import { Divider, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { SwitchModeButton } from "../../components/ui/SwitchModeButton";
+import { ColorContext } from "../../context";
 
 export const LayoutPrincipal = (props) => {
   const { logout, user } = useAuth();
@@ -24,11 +25,10 @@ export const LayoutPrincipal = (props) => {
   const { drawerWidth, handleDrawerToggle } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  //const establesimientoId = user.establesimiento?.id;
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  //console.log(drawerWidth);
-  //console.log(handleDrawerToggle);
+  const colorMode = React.useContext(ColorContext);
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -97,6 +97,10 @@ export const LayoutPrincipal = (props) => {
   );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
+
+  const cambiarModoOscuro = () => {
+    console.log("Click...");
+  };
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -113,7 +117,7 @@ export const LayoutPrincipal = (props) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem onClick={colorMode.toggleColorMode}>
         <SwitchModeButton />
         <p>Modo Oscuro</p>
       </MenuItem>
@@ -124,7 +128,7 @@ export const LayoutPrincipal = (props) => {
             <MailIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p>Mensajes</p>
       </MenuItem>
 
       <MenuItem>
@@ -137,7 +141,7 @@ export const LayoutPrincipal = (props) => {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p>Notificaciones</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -153,10 +157,6 @@ export const LayoutPrincipal = (props) => {
       </MenuItem>
     </Menu>
   );
-
-  //if (!establesimientoId) {
-  //router.push("/configuracion/establesimiento");
-  //}
 
   return (
     <Box sx={{ flexGrow: 1 }}>
