@@ -83,7 +83,8 @@ const PaginaRecuperaContrasena = () => {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        const url = "http://localhost:3000/api/api_four";
+        const url = "https://purarazapp.netlify.app/api/api_four";
+        //const url = "http://localhost:3000/api/api_four";
         const params = {
           method: "POST",
           headers: {
@@ -133,7 +134,7 @@ const PaginaRecuperaContrasena = () => {
             </Avatar>
 
             <Typography component="h1" variant="h5">
-              Recuperar Contraseña
+              Recuperar Contraseña 2
             </Typography>
 
             <Box
