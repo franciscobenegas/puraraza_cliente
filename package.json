@@ -26,6 +26,7 @@
     "luxon": "^3.3.0",
     "mocker-data-generator": "^3.0.1",
     "next": "13.2.4",
+    "nodemailer": "^6.9.4",
     "numeral": "^2.0.6",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",

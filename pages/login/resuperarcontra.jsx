@@ -83,12 +83,24 @@ const PaginaRecuperaContrasena = () => {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        emailjs.send(SERVICE_ID, TEMPLATE_ID, formValue, USER_ID).then(() => {
-          console.log("Email Enviado con Exito");
+        const url = "http://localhost:3000/api/api_four";
+        const params = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValue),
+        };
+
+        const response = await fetch(url, params);
+        if (response.status !== 200) {
+          notifyErr();
+        }
+        if (response.status === 200) {
           notify();
-        });
-      } catch {
-        console.error("Email no enviado");
+        }
+      } catch (error) {
+        throw error;
         notifyErr();
       }
     },
@@ -136,25 +148,15 @@ const PaginaRecuperaContrasena = () => {
                 required
                 fullWidth
                 label="Correo Electronico"
-                name="to_name"
+                name="email"
                 autoComplete="email"
                 autoFocus
                 type="email"
-                value={formik.values.to_name}
+                value={formik.values.email}
                 onChange={formik.handleChange}
-                error={formik.errors.to_name}
+                error={formik.errors.email}
               />
-              <TextField
-                variant="filled"
-                margin="normal"
-                fullWidth
-                label="Subject"
-                name="subject"
-                type="text"
-                value={btoa(formik.values.subject)}
-                onChange={formik.handleChange}
-                error={formik.errors.subject}
-              />
+
               <Button
                 type="submit"
                 fullWidth
