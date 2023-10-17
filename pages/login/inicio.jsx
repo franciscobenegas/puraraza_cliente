@@ -126,14 +126,13 @@ const PaginaInicio = () => {
           >
             <Box
               sx={{
-                //marginTop: 8,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
             >
               <Box sx={{ mt: -2 }}>
-                <img src={logo.src} width="300" height="200" />
+                <img src={logo.src} width="300" height="200" alt="Logo" />
               </Box>
 
               <Typography
