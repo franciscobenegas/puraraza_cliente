@@ -13,6 +13,7 @@ import {
   Container,
   Paper,
   InputAdornment,
+  Image,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import NextLink from "next/link";
@@ -30,6 +31,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { blue } from "@mui/material/colors";
 import background from "../../public/fondo.jpg";
+import logo from "../../public/logo.png";
 
 console.log(background);
 
@@ -124,17 +126,21 @@ const PaginaInicio = () => {
           >
             <Box
               sx={{
-                marginTop: 8,
+                //marginTop: 8,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "darkblue", width: 80, height: 80 }}>
-                <KeyOutlinedIcon sx={{ fontSize: 60 }} />
-              </Avatar>
+              <Box sx={{ mt: -2 }}>
+                <img src={logo.src} width="300" height="200" />
+              </Box>
 
-              <Typography component="h1" variant="h5">
+              <Typography
+                component="h1"
+                variant="h5"
+                sx={{ mt: -4, color: "#1565C0" }}
+              >
                 Iniciar Sesion
               </Typography>
 
