@@ -81,7 +81,16 @@ const PaginaRegistro = () => {
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer autoClose={8000} />
-      <Container component="main" maxWidth="sm">
+      <Container
+        component="main"
+        maxWidth="sm"
+        sx={{
+          //height: "100vh",
+          //backgroundImage: { image },
+          //backgroundColor: "red",
+          paddingTop: 2,
+        }}
+      >
         <Paper
           elevation={6}
           sx={{

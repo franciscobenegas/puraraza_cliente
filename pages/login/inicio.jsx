@@ -29,6 +29,9 @@ import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { blue } from "@mui/material/colors";
+import background from "../../public/fondo.jpg";
+
+console.log(background);
 
 const authCtrl = new Auth();
 
@@ -90,135 +93,153 @@ const PaginaInicio = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ToastContainer autoClose={8000} />
-      <Container component="main" maxWidth="xs">
-        <Paper
-          elevation={6}
+      <Box
+        sx={{
+          backgroundImage: `url(${background.src})`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          display: "flex",
+          height: "100vh",
+        }}
+      >
+        <ToastContainer autoClose={8000} />
+
+        <Container
+          component="main"
+          maxWidth="xs"
           sx={{
-            paddingRight: "20px",
-            paddingLeft: "20px",
-            paddingBottom: "5px",
-            paddingTop: "1px",
-            marginTop: "20px",
+            padding: 5,
           }}
         >
-          <Box
+          <Paper
+            elevation={6}
             sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              paddingRight: "20px",
+              paddingLeft: "20px",
+              paddingBottom: "5px",
+              paddingTop: "1px",
+              marginTop: "20px",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "darkblue", width: 80, height: 80 }}>
-              <KeyOutlinedIcon sx={{ fontSize: 60 }} />
-            </Avatar>
-
-            <Typography component="h1" variant="h5">
-              Iniciar Sesion
-            </Typography>
-
             <Box
-              component="form"
-              onSubmit={formik.handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
+              sx={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              <TextField
-                variant="filled"
-                margin="normal"
-                required
-                fullWidth
-                label="Usuario o Email"
-                name="identifier"
-                autoComplete="email"
-                autoFocus
-                value={formik.values.identifier}
-                onChange={formik.handleChange}
-                error={formik.errors.identifier}
-                helperText={
-                  formik.errors.identifier
-                    ? "Debe cargar el usuario o email"
-                    : null
-                }
-              />
-              <TextField
-                variant="filled"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Contraseña"
-                type={showPassword ? "text" : "password"}
-                id="password"
-                autoComplete="current-password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                error={formik.errors.password}
-                helperText={
-                  formik.errors.password ? "Debe cargar la contraseña" : null
-                }
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        // onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? (
-                          <VisibilityOffOutlinedIcon
-                            sx={{ color: blue[800], fontSize: 35 }}
-                          />
-                        ) : (
-                          <VisibilityOutlinedIcon
-                            sx={{ color: blue[800], fontSize: 35 }}
-                          />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+              <Avatar sx={{ m: 1, bgcolor: "darkblue", width: 80, height: 80 }}>
+                <KeyOutlinedIcon sx={{ fontSize: 60 }} />
+              </Avatar>
 
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Recordar inicio sesion"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2, borderRadius: 10 }}
+              <Typography component="h1" variant="h5">
+                Iniciar Sesion
+              </Typography>
+
+              <Box
+                component="form"
+                onSubmit={formik.handleSubmit}
+                noValidate
+                sx={{ mt: 1 }}
               >
-                Iniciar
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <NextLink
-                    href="/login/resuperarcontra"
-                    passHref
-                    legacyBehavior
-                  >
-                    <Link underline="none" variant="body2">
-                      Has olvidado tu contraseña?
-                    </Link>
-                  </NextLink>
+                <TextField
+                  variant="filled"
+                  margin="normal"
+                  required
+                  fullWidth
+                  label="Usuario o Email"
+                  name="identifier"
+                  autoComplete="email"
+                  autoFocus
+                  value={formik.values.identifier}
+                  onChange={formik.handleChange}
+                  error={formik.errors.identifier}
+                  helperText={
+                    formik.errors.identifier
+                      ? "Debe cargar el usuario o email"
+                      : null
+                  }
+                />
+                <TextField
+                  variant="filled"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Contraseña"
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  autoComplete="current-password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  error={formik.errors.password}
+                  helperText={
+                    formik.errors.password ? "Debe cargar la contraseña" : null
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          // onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <VisibilityOffOutlinedIcon
+                              sx={{ color: blue[800], fontSize: 35 }}
+                            />
+                          ) : (
+                            <VisibilityOutlinedIcon
+                              sx={{ color: blue[800], fontSize: 35 }}
+                            />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Recordar inicio sesion"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, borderRadius: 10 }}
+                >
+                  Iniciar
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <NextLink
+                      href="/login/resuperarcontra"
+                      passHref
+                      legacyBehavior
+                    >
+                      <Link underline="none" variant="body2">
+                        Has olvidado tu contraseña?
+                      </Link>
+                    </NextLink>
+                  </Grid>
+                  <Grid item>
+                    <NextLink href="/login/registro" passHref legacyBehavior>
+                      <Link underline="none" variant="body2">
+                        {"¿No tienes una cuenta?"}
+                      </Link>
+                    </NextLink>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <NextLink href="/login/registro" passHref legacyBehavior>
-                    <Link underline="none" variant="body2">
-                      {"¿No tienes una cuenta?"}
-                    </Link>
-                  </NextLink>
-                </Grid>
-              </Grid>
+              </Box>
             </Box>
-          </Box>
-          <Copyright sx={{ mt: 5, mb: 4 }} />
-        </Paper>
-      </Container>
+            <Copyright sx={{ mt: 5, mb: 4 }} />
+          </Paper>
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 };
