@@ -4,8 +4,8 @@ export const ENV = {
   //API_URL: "http://localhost:1337/api",
 
   // Base de Datos Nube
-  SERVER_HOST: "https://strapi-production-3882.up.railway.app",
-  API_URL: "https://strapi-production-3882.up.railway.app/api",
+  SERVER_HOST: "https://strapi-production-49f2.up.railway.app",
+  API_URL: "https://strapi-production-49f2.up.railway.app/api",
 
   ENDPOINTS: {
     AUTH: {
@@ -32,5 +32,5 @@ export const ENV = {
   TOKEN: "Token_PuraRazapp",
   CART: "cart",
   STRIPE_TOKEN:
-    "pk_test_51McFNvGuOrnPfQra2CPEv40T6bwjvke3EmtZELp3685TKzCMDgagCauuO8nOVgL2sI4eiU0s830K3aZj31iOXtoV00zA9gPqMd",
+    "0a683301cb01f2428652336b815d422887e88a9a4d24933bd992fa3cf2e332486fbd2010b9a698da0b22c8f009d3955586495f0112d0827c246b7f43f9f06e2f44fa9ded6d27d01852ab324dbda22b28cf20abb153c5c7b5e0312cb87130abd7d9412d3ac0b8c0e3676e96a6d41a8966640b88886afd9e9f09da29fd2001aff4",
 };
